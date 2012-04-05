@@ -100,6 +100,23 @@ NSMutableArray *imageViews;
 	}
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+	UITouch *touch = [touches anyObject];
+	NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+    [userInfo setObject:touch forKey:[GlobalEvents MOUSEDOWN_EVENT_DATA]];
+	[[NSNotificationCenter defaultCenter] postNotificationName:[GlobalEvents MOUSEDOWN_EVENT] object:self userInfo:userInfo];	
+}
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+	UITouch *touch = [touches anyObject];
+	NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+    [userInfo setObject:touch forKey:[GlobalEvents MOUSEUP_EVENT_DATA]];
+	[[NSNotificationCenter defaultCenter] postNotificationName:[GlobalEvents MOUSEUP_EVENT] object:self userInfo:userInfo];	
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event{}
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{}
+
+
 - (void) removeAllImages{
 	for (int i=0; i<[imageViews count]; i++){
 		[[imageViews objectAtIndex:i] removeFromSuperview];

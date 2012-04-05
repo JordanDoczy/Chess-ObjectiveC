@@ -11,6 +11,7 @@
 #import "ChessSquare.h"
 #import "ColorEnum.h"
 #import "ColumnEnum.h"
+#import "GlobalEvents.h"
 #import "History.h"
 #import "PieceFactory.h"
 #import "PieceView.h"
@@ -87,12 +88,23 @@ History *model;
 - (void) undo{ 
 	model.currentIndex--;
 }
-- (void) viewTapped:(UITapGestureRecognizer *)recognizer {
-	UIView *tappedView = [recognizer.view hitTest:[recognizer locationInView:recognizer.view] withEvent:nil];
-	if([tappedView isKindOfClass:[PieceView class]])
-		[self movePiece:[[ChessSquare alloc] init:((PieceView *)tappedView).column :((PieceView *)tappedView).row] :[[ChessSquare alloc] init:E :Four]];
+
+- (void) mouseDownEventHandler:(NSNotification *)notification{
+	
+	NSDictionary *dict = [notification userInfo];
+	UITouch *touch = [dict objectForKey:[GlobalEvents MOUSEDOWN_EVENT_DATA]];
+	CGPoint pos = [touch locationInView: [UIApplication sharedApplication].keyWindow];
+	
+	NSLog(@"Position of touch: %.3f, %.3f", pos.x, pos.y);	
 }
 
-
+- (void) mouseUpEventHandler:(NSNotification *)notification{
+	
+	NSDictionary *dict = [notification userInfo];
+	UITouch *touch = [dict objectForKey:[GlobalEvents MOUSEUP_EVENT_DATA]];
+	CGPoint pos = [touch locationInView: [UIApplication sharedApplication].keyWindow];
+	
+	NSLog(@"Position of touch: %.3f, %.3f", pos.x, pos.y);	
+}
 
 @end
