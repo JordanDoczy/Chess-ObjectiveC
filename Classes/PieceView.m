@@ -14,14 +14,10 @@
 @synthesize column;
 @synthesize row;
 
-
 - (void) touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event {
     UITouch *touch = [touches anyObject]; 
 	CGPoint location = [touch locationInView:self.superview];
     self.center = location;
 }
-
-
-
 
 @end

@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "ColorEnum.h"
-#import "ColumnEnum.h"
-#import "RowEnum.h"
 
 @interface Piece : NSObject {
 

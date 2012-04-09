@@ -11,15 +11,11 @@
 #import "Piece.h"
 #import "RowEnum.h"
 
-@interface ChessSquare : NSObject {
-
-}
+@interface ChessSquare : NSObject {}
 
 @property (nonatomic, retain) Piece *piece;
 @property (nonatomic) ColumnEnum column;
 @property (nonatomic) RowEnum row;
-
-
 
 - (id) init:(ColumnEnum)_column :(RowEnum)_row;
 

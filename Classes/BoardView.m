@@ -8,11 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "BoardView.h"
-#import "ColumnEnum.h"
+#import "Constants.h"
 #import "GlobalEvents.h"
 #import "History.h"
 #import "NullPiece.h"
-#import "RowEnum.h"
 #import "Piece.h"
 #import "PieceView.h"
 
@@ -20,14 +19,13 @@
 
 
 History *model;
-
-int x = 10;
-int y = 30;
-int size = 37;
 NSMutableArray *imageViews;
 
 - (id) init{
-	[self initWithFrame:CGRectMake(0, 0, 320, 480)];
+	[self initWithFrame:CGRectMake(0, 
+								   0,
+								   ([Constants SQUARE_SIZE]*[Constants COLUMNS])+([Constants X_OFFSET]*2), 
+								   ([Constants SQUARE_SIZE]*[Constants ROWS])+([Constants Y_OFFSET]*2))];
 	imageViews = [[NSMutableArray alloc] init];
 	return self;
 }
@@ -51,12 +49,15 @@ NSMutableArray *imageViews;
 	int row;
 	int column;
 	
-	for(row=0; row<8; row++){
-		for (column=0; column<8; column++) {
+	for(row=0; row<[Constants ROWS]; row++){
+		for (column=0; column<[Constants COLUMNS]; column++) {
 			if(row % 2 == 0 && column % 2 == 0) CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
 			else if(row % 2 != 0 && column % 2 != 0) CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
 			else CGContextSetFillColorWithColor(context, [UIColor grayColor].CGColor);
-			CGContextAddRect(context, CGRectMake(x+(size*column), y+(size*row), size, size));	
+			CGContextAddRect(context, CGRectMake([Constants X_OFFSET]+([Constants SQUARE_SIZE]*column),
+												 [Constants Y_OFFSET]+([Constants SQUARE_SIZE]*row),
+												 [Constants SQUARE_SIZE],
+												 [Constants SQUARE_SIZE]));	
 			CGContextFillPath(context);
 		}
 	}
@@ -73,7 +74,10 @@ NSMutableArray *imageViews;
 	PieceView *pieceView = [[PieceView alloc] initWithImage:image];
 	pieceView.userInteractionEnabled = YES;
 	pieceView.opaque = YES;
-	pieceView.frame = CGRectMake(x+(column*size)+1.5, y+(row*size), 34, 34);
+	pieceView.frame = CGRectMake([Constants X_OFFSET]+(column*[Constants SQUARE_SIZE])+1.7,  // 1.5 is needed to center piece (horizontally)
+								 [Constants Y_OFFSET]+(row*[Constants SQUARE_SIZE])+.7,	  // .5 is needed to center piece (vertically)
+								 [Constants SQUARE_SIZE]*.9, 
+								 [Constants SQUARE_SIZE]*.9); 
 	pieceView.column = column;
 	pieceView.row = row;
 	 
@@ -90,8 +94,8 @@ NSMutableArray *imageViews;
 	
 	[self removeAllImages];
 	
-	for (column = 0; column < 8; column++) {
-		for (row=0; row<8; row++) {
+	for (column = 0; column < [Constants COLUMNS]; column++) {
+		for (row=0; row<[Constants ROWS]; row++) {
 			piece = [model.currentMove getSquare:column :row];
 			if(![piece isKindOfClass:[NullPiece class]]){
 				[self addPiece:piece :column :row];

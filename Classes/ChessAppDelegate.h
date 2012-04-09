@@ -12,6 +12,5 @@
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 
-
 @end
 

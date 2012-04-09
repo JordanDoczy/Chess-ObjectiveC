@@ -9,8 +9,6 @@
 #import "ColorEnum.h"
 #import "GlobalFunctions.h"
 #import "Piece.h"
-#import "ColumnEnum.h"
-#import "RowEnum.h"
 
 @implementation Piece
 

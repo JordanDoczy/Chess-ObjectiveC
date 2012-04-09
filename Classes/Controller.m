@@ -11,6 +11,7 @@
 #import "ChessSquare.h"
 #import "ColorEnum.h"
 #import "ColumnEnum.h"
+#import "Constants.h"
 #import "GlobalEvents.h"
 #import "History.h"
 #import "PieceFactory.h"
@@ -94,14 +95,13 @@ ChessSquare *endSquare;
 	NSDictionary *dict = [notification userInfo];
 	UITouch *touch = [dict objectForKey:[GlobalEvents MOUSEDOWN_EVENT_DATA]];
 	CGPoint pos = [touch locationInView: [UIApplication sharedApplication].keyWindow];
-	startSquare = [[ChessSquare alloc] init:floor((pos.x-10)/37) :floor((pos.y-30)/37)];
-}
+	startSquare = [[ChessSquare alloc] init:floor((pos.x-[Constants X_OFFSET])/[Constants SQUARE_SIZE]) :floor((pos.y-[Constants Y_OFFSET])/[Constants SQUARE_SIZE])];}
 - (void) mouseUpEventHandler:(NSNotification *)notification{
 
 	NSDictionary *dict = [notification userInfo];
 	UITouch *touch = [dict objectForKey:[GlobalEvents MOUSEUP_EVENT_DATA]];
 	CGPoint pos = [touch locationInView: [UIApplication sharedApplication].keyWindow];
-	endSquare = [[ChessSquare alloc] init:floor((pos.x-10)/37) :floor((pos.y-30)/37)];
+	endSquare = [[ChessSquare alloc] init:floor((pos.x-[Constants X_OFFSET])/[Constants SQUARE_SIZE]) :floor((pos.y-[Constants Y_OFFSET])/[Constants SQUARE_SIZE])];
 	[self movePiece:startSquare :endSquare];
 }
 

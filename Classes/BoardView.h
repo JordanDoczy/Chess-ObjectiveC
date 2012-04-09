@@ -7,10 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ChessSquare.h"
-#import "ColumnEnum.h"
 #import "History.h"
-#import "RowEnum.h"
 
 @interface BoardView : UIView {}
 

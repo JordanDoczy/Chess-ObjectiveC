@@ -9,6 +9,7 @@
 #import "Board.h"
 #import "ColorEnum.h"
 #import "ColumnEnum.h"
+#import "Constants.h"
 #import "RowEnum.h"
 #import "Piece.h"
 #import "NullPiece.h"
@@ -25,13 +26,13 @@
 	[self clearSquare:[Board getIndex:column :row]];
 }
 + (int) getColumn:(int)index{
-	return index%8;
+	return index%[Constants COLUMNS];
 }
 + (int) getIndex:(int)column :(int)row{
-	return (row*8) + column;
+	return (row*[Constants ROWS]) + column;
 }
 + (int) getRow:(int)index{
-	return floor(index/8);
+	return floor(index/[Constants ROWS]);
 }
 - (id) getSquare:(int)index{
 	return [squares objectAtIndex:index];
@@ -46,13 +47,13 @@
 	[self setSquare:[Board getIndex:column :row] :piece];
 }
 - (id) init{
-	squares = [[NSMutableArray alloc] initWithCapacity:64];
+	squares = [[NSMutableArray alloc] initWithCapacity:[Constants COLUMNS]*[Constants ROWS]];
 	[self initSquares];
 	return self;
 }
 - (void) initSquares{
 	int i;
-	for (i=0; i<64; i++) {
+	for (i=0; i<[Constants COLUMNS]*[Constants ROWS]; i++) {
 		[squares addObject:[NullPiece alloc]];
 	}
 }

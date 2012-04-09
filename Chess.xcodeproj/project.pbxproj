@@ -36,6 +36,7 @@
 		17D454A115225BE000361BDF /* WhiteQueen.png in Resources */ = {isa = PBXBuildFile; fileRef = 17D4549515225BE000361BDF /* WhiteQueen.png */; };
 		17D454A215225BE000361BDF /* WhiteRook.png in Resources */ = {isa = PBXBuildFile; fileRef = 17D4549615225BE000361BDF /* WhiteRook.png */; };
 		17D4552F1522881100361BDF /* ChessSquare.m in Sources */ = {isa = PBXBuildFile; fileRef = 17D4552E1522881100361BDF /* ChessSquare.m */; };
+		17F7B39C15338663005BB0BC /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F7B39B15338663005BB0BC /* Constants.m */; };
 		1D3623260D0F684500981E51 /* ChessAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* ChessAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -96,6 +97,8 @@
 		17D4549615225BE000361BDF /* WhiteRook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = WhiteRook.png; path = images/WhiteRook.png; sourceTree = SOURCE_ROOT; };
 		17D4552D1522881100361BDF /* ChessSquare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChessSquare.h; sourceTree = "<group>"; };
 		17D4552E1522881100361BDF /* ChessSquare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChessSquare.m; sourceTree = "<group>"; };
+		17F7B39A15338663005BB0BC /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		17F7B39B15338663005BB0BC /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* ChessAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChessAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* ChessAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChessAppDelegate.m; sourceTree = "<group>"; };
@@ -197,6 +200,8 @@
 				178BC9C315217705001C846E /* GlobalFunctions.m */,
 				173B71541523BD7D002E31B5 /* GlobalEvents.h */,
 				173B71551523BD7D002E31B5 /* GlobalEvents.m */,
+				17F7B39A15338663005BB0BC /* Constants.h */,
+				17F7B39B15338663005BB0BC /* Constants.m */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -370,6 +375,7 @@
 				17CF3C8A152A275000D38B22 /* History.m in Sources */,
 				17CF3D95152B8F5600D38B22 /* NullPiece.m in Sources */,
 				1754EAB1152D3F13003CE42F /* PieceView.m in Sources */,
+				17F7B39C15338663005BB0BC /* Constants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
