@@ -22,6 +22,9 @@
 
 History *model;
 
+ChessSquare *startSquare;
+ChessSquare *endSquare;
+
 - (id) init{
 	return self;
 }
@@ -30,8 +33,6 @@ History *model;
 	model = history;
 	return [self init];
 }
-
-
 - (void) movePiece:(ChessSquare*)fromSquare :(ChessSquare*)toSquare{
 	
 	Board *board = model.currentMove;
@@ -88,23 +89,20 @@ History *model;
 - (void) undo{ 
 	model.currentIndex--;
 }
-
 - (void) mouseDownEventHandler:(NSNotification *)notification{
 	
 	NSDictionary *dict = [notification userInfo];
 	UITouch *touch = [dict objectForKey:[GlobalEvents MOUSEDOWN_EVENT_DATA]];
 	CGPoint pos = [touch locationInView: [UIApplication sharedApplication].keyWindow];
-	
-	NSLog(@"Position of touch: %.3f, %.3f", pos.x, pos.y);	
+	startSquare = [[ChessSquare alloc] init:floor((pos.x-10)/37) :floor((pos.y-30)/37)];
 }
-
 - (void) mouseUpEventHandler:(NSNotification *)notification{
-	
+
 	NSDictionary *dict = [notification userInfo];
 	UITouch *touch = [dict objectForKey:[GlobalEvents MOUSEUP_EVENT_DATA]];
 	CGPoint pos = [touch locationInView: [UIApplication sharedApplication].keyWindow];
-	
-	NSLog(@"Position of touch: %.3f, %.3f", pos.x, pos.y);	
+	endSquare = [[ChessSquare alloc] init:floor((pos.x-10)/37) :floor((pos.y-30)/37)];
+	[self movePiece:startSquare :endSquare];
 }
 
 @end
