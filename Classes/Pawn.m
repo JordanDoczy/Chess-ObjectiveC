@@ -12,10 +12,10 @@
 @implementation Pawn
 
 
-- (id) init:(ColorEnum)color{
+- (id) init:(ColorEnum)_color{
 	
 	super.name = @"Pawn";
-	[super init: color];
+	[super init: _color];
 	return self;
 }
 

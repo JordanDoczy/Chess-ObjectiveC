@@ -11,4 +11,11 @@
 
 @implementation NullPiece
 
+
+- (id) init {
+	
+	self.color = -1;
+	return self;
+}
+
 @end

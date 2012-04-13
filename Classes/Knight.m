@@ -12,10 +12,10 @@
 @implementation Knight
 
 
-- (id) init:(ColorEnum)color{
+- (id) init:(ColorEnum)_color{
 	
 	super.name = @"Knight";
-	[super init: color];
+	[super init: _color];
 	return self;
 }
 

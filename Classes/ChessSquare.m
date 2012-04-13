@@ -7,8 +7,7 @@
 //
 
 #import "ChessSquare.h"
-#import "ColumnEnum.h"
-#import "RowEnum.h"
+#import "Piece.h"
 
 @implementation ChessSquare
 

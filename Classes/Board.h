@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Piece.h"
+@class Piece;
 
 @interface Board : NSObject { }
 
@@ -21,8 +21,8 @@
 - (id) getSquare:(int)column :(int)row;
 - (id) init;
 - (void) initSquares;
-- (void) setSquare:(int)index :(Piece*)piece;
-- (void) setSquare:(int)column :(int)row :(Piece*)piece;
+- (void) setSquare:(int)index :(Piece *)piece;
+- (void) setSquare:(int)column :(int)row :(Piece *)piece;
 
 @property (nonatomic, retain) NSMutableArray *squares;
 	

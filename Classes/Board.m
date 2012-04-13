@@ -20,7 +20,7 @@
 @synthesize squares;
 
 - (void) clearSquare:(int)index{
-	[self setSquare:index :[NullPiece alloc]];
+	[self setSquare:index :[[NullPiece alloc] init]];
 }
 - (void) clearSquare:(int)column :(int)row{
 	[self clearSquare:[Board getIndex:column :row]];
@@ -54,7 +54,7 @@
 - (void) initSquares{
 	int i;
 	for (i=0; i<[Constants COLUMNS]*[Constants ROWS]; i++) {
-		[squares addObject:[NullPiece alloc]];
+		[squares addObject:[[NullPiece alloc] init]];
 	}
 }
 

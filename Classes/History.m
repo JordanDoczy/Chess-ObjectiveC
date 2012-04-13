@@ -10,7 +10,6 @@
 #import "GlobalEvents.h"
 #import "History.h"
 
-
 @implementation History
 
 NSMutableArray *moves;
@@ -44,6 +43,9 @@ int _currentIndex=0;
 	_currentIndex = value;
 	[[NSNotificationCenter defaultCenter] postNotificationName:[GlobalEvents CHANGE_EVENT] object:self];	
 
+}
+- (void) refresh{
+	self.currentIndex = self.currentIndex;
 }
 
 

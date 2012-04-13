@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "Piece.h"
 
-@interface NullPiece : Piece {
+@interface NullPiece : Piece {}
 
-}
+- (id) init;
 
 @end

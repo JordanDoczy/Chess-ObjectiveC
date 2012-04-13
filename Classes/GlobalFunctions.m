@@ -6,11 +6,7 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "ColorEnum.h"
-#import "ColumnEnum.h"
 #import "GlobalFunctions.h"
-#import "RowEnum.h"
-#import "PieceEnum.h"
 
 @implementation GlobalFunctions
 

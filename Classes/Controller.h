@@ -7,15 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ChessSquare.h"
-#import "History.h"
+
+@class Move;
+@class History;
 
 @interface Controller : NSObject {
 
 }
 - (id) init;
 - (id) initWithModel:(History *)history;
-- (void) movePiece:(ChessSquare*)fromSquare :(ChessSquare*)toSquare;
+- (void) movePiece:(Move *)move;
 - (void) reset;
 - (void) setUpBoard;
 - (void) undo;

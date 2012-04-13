@@ -14,35 +14,45 @@
 #import "Constants.h"
 #import "GlobalEvents.h"
 #import "History.h"
+#import "Move.h"
 #import "PieceFactory.h"
 #import "PieceView.h"
 #import "RowEnum.h"
+#import "Rules.h"
 
 
 @implementation Controller
 
 History *model;
-
-ChessSquare *startSquare;
-ChessSquare *endSquare;
+Rules *rules;
+Move *move;
 
 - (id) init{
+	move = [[Move alloc] init];
 	return self;
 }
 - (id) initWithModel:(History*)history{
 	
 	model = history;
+	rules = [[Rules alloc] initWithModel:history];
 	return [self init];
 }
-- (void) movePiece:(ChessSquare*)fromSquare :(ChessSquare*)toSquare{
+- (void) movePiece:(Move *)move{
 	
 	Board *board = model.currentMove;
-	Piece *currentPiece = [board getSquare:fromSquare.column :fromSquare.row];
-	[board clearSquare:fromSquare.column :fromSquare.row];
-	[board setSquare:toSquare.column :toSquare.row :currentPiece];
-	[model addMove:board];
+	Piece *currentPiece = [board getSquare:move.fromColumn :move.fromRow];
+
+	if ([rules isMoveValid:move]){
+		[board clearSquare:move.fromColumn :move.fromRow];
+		[board setSquare:move.toColumn :move.toRow :currentPiece];
+		[model addMove:board];
+	}
+	else{
+		[model refresh];
+	}
 }
 - (void)reset{
+	[move reset];
 	[self setUpBoard];
 }
 - (void) setUpBoard{
@@ -95,14 +105,22 @@ ChessSquare *endSquare;
 	NSDictionary *dict = [notification userInfo];
 	UITouch *touch = [dict objectForKey:[GlobalEvents MOUSEDOWN_EVENT_DATA]];
 	CGPoint pos = [touch locationInView: [UIApplication sharedApplication].keyWindow];
-	startSquare = [[ChessSquare alloc] init:floor((pos.x-[Constants X_OFFSET])/[Constants SQUARE_SIZE]) :floor((pos.y-[Constants Y_OFFSET])/[Constants SQUARE_SIZE])];}
+	
+	[move reset];
+	move.fromColumn = floor((pos.x-[Constants X_OFFSET])/[Constants SQUARE_SIZE]);
+	move.fromRow = floor((pos.y-[Constants Y_OFFSET])/[Constants SQUARE_SIZE]);
+}
+
 - (void) mouseUpEventHandler:(NSNotification *)notification{
 
 	NSDictionary *dict = [notification userInfo];
 	UITouch *touch = [dict objectForKey:[GlobalEvents MOUSEUP_EVENT_DATA]];
 	CGPoint pos = [touch locationInView: [UIApplication sharedApplication].keyWindow];
-	endSquare = [[ChessSquare alloc] init:floor((pos.x-[Constants X_OFFSET])/[Constants SQUARE_SIZE]) :floor((pos.y-[Constants Y_OFFSET])/[Constants SQUARE_SIZE])];
-	[self movePiece:startSquare :endSquare];
+
+	move.toColumn = floor((pos.x-[Constants X_OFFSET])/[Constants SQUARE_SIZE]);
+	move.toRow = floor((pos.y-[Constants Y_OFFSET])/[Constants SQUARE_SIZE]);
+
+	[self movePiece:move];
 }
 
 @end

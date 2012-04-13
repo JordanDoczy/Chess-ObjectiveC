@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Board.h"
+@class Board;
 
 @interface History : NSObject {
 
@@ -18,6 +18,7 @@
 
 - (void) addMove:(Board*)board;
 - (id) init;
+- (void) refresh;
 
 	
 @end

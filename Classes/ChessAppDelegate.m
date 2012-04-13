@@ -8,9 +8,13 @@
 
 #import "BoardView.h"
 #import "ChessAppDelegate.h"
+#import "ColumnEnum.h"
 #import "Controller.h"
 #import "GlobalEvents.h"
 #import "History.h"
+#import "Move.h"
+#import "RowEnum.h"
+
 
 @implementation ChessAppDelegate
 
@@ -42,11 +46,11 @@ BoardView *view;
 }
 
 - (void) test{
-	[controller movePiece:[[ChessSquare alloc] init:E :Two] :[[ChessSquare alloc] init:E :Four]];
+	[controller movePiece:[[Move alloc] init:E :Two :E :Four]];
 	[controller undo];
-	[controller movePiece:[[ChessSquare alloc] init:D :Two] :[[ChessSquare alloc] init:D :Four]];
-	[controller movePiece:[[ChessSquare alloc] init:E :Seven] :[[ChessSquare alloc] init:E :Five]];
-	[controller movePiece:[[ChessSquare alloc] init:G :One] :[[ChessSquare alloc] init:F :Three]];
+	[controller movePiece:[[Move alloc] init:D :Two :D :Four]];
+	[controller movePiece:[[Move alloc] init:E :Seven :E :Five]];
+	[controller movePiece:[[Move alloc] init:G :One :F :Three]];
 	[controller undo];
 	[controller undo];
 	[controller undo];

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Board.h"
 #import "BoardView.h"
 #import "Constants.h"
 #import "GlobalEvents.h"

@@ -11,11 +11,12 @@
 @implementation King
 
 
-- (id) init:(ColorEnum)color{
+- (id) init:(ColorEnum)_color{
 	
 	super.name = @"King";
-	[super init: color];
+	[super init: _color];
 	return self;
 }
+
 
 @end

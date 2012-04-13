@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "ColumnEnum.h"
-#import "Piece.h"
 #import "RowEnum.h"
+
+@class Piece;
 
 @interface ChessSquare : NSObject {}
 

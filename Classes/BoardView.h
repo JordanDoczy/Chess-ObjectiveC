@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "History.h"
+
+@class History;
+@class Piece;
 
 @interface BoardView : UIView {}
 

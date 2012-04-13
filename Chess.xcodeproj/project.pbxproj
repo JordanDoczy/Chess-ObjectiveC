@@ -36,6 +36,8 @@
 		17D454A115225BE000361BDF /* WhiteQueen.png in Resources */ = {isa = PBXBuildFile; fileRef = 17D4549515225BE000361BDF /* WhiteQueen.png */; };
 		17D454A215225BE000361BDF /* WhiteRook.png in Resources */ = {isa = PBXBuildFile; fileRef = 17D4549615225BE000361BDF /* WhiteRook.png */; };
 		17D4552F1522881100361BDF /* ChessSquare.m in Sources */ = {isa = PBXBuildFile; fileRef = 17D4552E1522881100361BDF /* ChessSquare.m */; };
+		17D480AF153883C300611525 /* Rules.m in Sources */ = {isa = PBXBuildFile; fileRef = 17D480AE153883C300611525 /* Rules.m */; };
+		17D480B4153883DF00611525 /* Move.m in Sources */ = {isa = PBXBuildFile; fileRef = 17D480B3153883DF00611525 /* Move.m */; };
 		17F7B39C15338663005BB0BC /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F7B39B15338663005BB0BC /* Constants.m */; };
 		1D3623260D0F684500981E51 /* ChessAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* ChessAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -97,6 +99,10 @@
 		17D4549615225BE000361BDF /* WhiteRook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = WhiteRook.png; path = images/WhiteRook.png; sourceTree = SOURCE_ROOT; };
 		17D4552D1522881100361BDF /* ChessSquare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChessSquare.h; sourceTree = "<group>"; };
 		17D4552E1522881100361BDF /* ChessSquare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChessSquare.m; sourceTree = "<group>"; };
+		17D480AD153883C300611525 /* Rules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rules.h; sourceTree = "<group>"; };
+		17D480AE153883C300611525 /* Rules.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Rules.m; sourceTree = "<group>"; };
+		17D480B2153883DF00611525 /* Move.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Move.h; sourceTree = "<group>"; };
+		17D480B3153883DF00611525 /* Move.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Move.m; sourceTree = "<group>"; };
 		17F7B39A15338663005BB0BC /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		17F7B39B15338663005BB0BC /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -141,6 +147,10 @@
 				17CF3C86152A274400D38B22 /* Board.m */,
 				17CF3C88152A275000D38B22 /* History.h */,
 				17CF3C89152A275000D38B22 /* History.m */,
+				17D480AD153883C300611525 /* Rules.h */,
+				17D480AE153883C300611525 /* Rules.m */,
+				17D480B2153883DF00611525 /* Move.h */,
+				17D480B3153883DF00611525 /* Move.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -376,6 +386,8 @@
 				17CF3D95152B8F5600D38B22 /* NullPiece.m in Sources */,
 				1754EAB1152D3F13003CE42F /* PieceView.m in Sources */,
 				17F7B39C15338663005BB0BC /* Constants.m in Sources */,
+				17D480AF153883C300611525 /* Rules.m in Sources */,
+				17D480B4153883DF00611525 /* Move.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

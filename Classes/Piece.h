@@ -9,8 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "ColorEnum.h"
 
-@interface Piece : NSObject {
+@class Move;
+@class Board;
 
+@interface Piece : NSObject {
+	ColorEnum color;
+	NSString *name;
 }
 
 @property (nonatomic) ColorEnum color;
@@ -19,5 +23,7 @@
 - (id) copyWithZone:(NSZone *)zone;
 - (NSString*)display;
 - (id) init:(ColorEnum)_color;
+- (BOOL) isMoveValid:(Move *)move :(Board *)board;
+
 
 @end

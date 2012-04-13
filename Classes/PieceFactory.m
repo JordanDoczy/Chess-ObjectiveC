@@ -6,8 +6,6 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "ColorEnum.h"
-#import "PieceEnum.h"
 #import "PieceFactory.h"
 #import "Pieces.h"
 

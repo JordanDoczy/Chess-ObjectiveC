@@ -6,8 +6,9 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "ColorEnum.h"
+#import "Board.h"
 #import "GlobalFunctions.h"
+#import "Move.h"
 #import "Piece.h"
 
 @implementation Piece
@@ -36,6 +37,12 @@
 	copy.color = color;
 	copy.name = name;
     return copy;
+}
+
+- (BOOL) isMoveValid:(Move *)move :(Board *)board{
+	Piece *to = [board getSquare: move.toColumn :move.toRow];
+	
+	return true;
 }
 
 @end
