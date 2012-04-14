@@ -24,17 +24,17 @@ History *model;
 	return [self init];
 }
 
-- (BOOL) isMoveValid:(Move *)move{
+- (BOOL) isValidMove:(Move *)move{
 	Piece *from = [[model currentMove] getSquare:move.fromColumn :move.fromRow];
 	Piece *to = [[model currentMove] getSquare:move.toColumn :move.toRow];
 
-	if([self isSameColor:from :to]) return false;
-	if(![from isMoveValid:move :[model currentMove]]) return false;
+	if([Rules isSameColor:from :to]) return false;
+	if(![from isValidMove:move :[model currentMove]]) return false;
 	
 	return true;
 }
 
-- (BOOL) isSameColor:(Piece *)from :(Piece *)to{
++ (BOOL) isSameColor:(Piece *)from :(Piece *)to{
 	return from.color == to.color;
 }
 

@@ -75,10 +75,12 @@ NSMutableArray *imageViews;
 	PieceView *pieceView = [[PieceView alloc] initWithImage:image];
 	pieceView.userInteractionEnabled = YES;
 	pieceView.opaque = YES;
-	pieceView.frame = CGRectMake([Constants X_OFFSET]+(column*[Constants SQUARE_SIZE])+1.7,  // 1.5 is needed to center piece (horizontally)
-								 [Constants Y_OFFSET]+(row*[Constants SQUARE_SIZE])+.7,	  // .5 is needed to center piece (vertically)
+	pieceView.frame = CGRectMake((column*[Constants SQUARE_SIZE])+1.7,  // 1.7 is needed to center piece (horizontally)
+								 [Constants Y_OFFSET] + (([Constants ROWS]-row-1)*[Constants SQUARE_SIZE])+.7,	  // .7 is needed to center piece (vertically)
 								 [Constants SQUARE_SIZE]*.9, 
 								 [Constants SQUARE_SIZE]*.9); 
+	
+	
 	pieceView.column = column;
 	pieceView.row = row;
 	 
@@ -108,12 +110,14 @@ NSMutableArray *imageViews;
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
 	UITouch *touch = [touches anyObject];
 	NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+
     [userInfo setObject:touch forKey:[GlobalEvents MOUSEDOWN_EVENT_DATA]];
 	[[NSNotificationCenter defaultCenter] postNotificationName:[GlobalEvents MOUSEDOWN_EVENT] object:self userInfo:userInfo];	
 }
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
 	UITouch *touch = [touches anyObject];
 	NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+
     [userInfo setObject:touch forKey:[GlobalEvents MOUSEUP_EVENT_DATA]];
 	[[NSNotificationCenter defaultCenter] postNotificationName:[GlobalEvents MOUSEUP_EVENT] object:self userInfo:userInfo];	
 }
@@ -130,7 +134,18 @@ NSMutableArray *imageViews;
 }
 
 - (void)dealloc {    [super dealloc];}
+
 	
+// static
++ (int) getColumnFromTouch:(UITouch *)touch{
+	CGPoint point = [touch locationInView: [UIApplication sharedApplication].keyWindow];
+	return floor((point.x-[Constants X_OFFSET])/[Constants SQUARE_SIZE]);
+}
++ (int) getRowFromTouch:(UITouch *)touch{
+	CGPoint point = [touch locationInView: [UIApplication sharedApplication].keyWindow];
+	return [Constants ROWS]-1-floor((point.y-[Constants Y_OFFSET])/[Constants SQUARE_SIZE]);
+}
+
 
 
 @end

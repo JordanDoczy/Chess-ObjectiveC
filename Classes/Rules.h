@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class Board;
+@class History;
 @class Move;
 @class Piece;
 
@@ -18,7 +19,7 @@
 }
 
 - (id) initWithModel:(History *)history;
-- (BOOL) isMoveValid:(Move *)move;
-- (BOOL) isSameColor:(Piece *)from :(Piece *)to;
+- (BOOL) isValidMove:(Move *)move;
++ (BOOL) isSameColor:(Piece *)from :(Piece *)to;
 
 @end

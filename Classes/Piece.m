@@ -15,6 +15,7 @@
 
 @synthesize color;
 @synthesize name;
+@synthesize moved;
 
 - (id) init:(ColorEnum)_color {
 	
@@ -39,8 +40,8 @@
     return copy;
 }
 
-- (BOOL) isMoveValid:(Move *)move :(Board *)board{
-	Piece *to = [board getSquare: move.toColumn :move.toRow];
+- (BOOL) isValidMove:(Move *)move :(Board *)board{
+	//Piece *to = [board getSquare: move.toColumn :move.toRow];
 	
 	return true;
 }

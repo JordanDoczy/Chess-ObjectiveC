@@ -13,9 +13,9 @@
 
 static int columns = 8;
 static int rows = 8;
-static int squareSize = 37;
-static int x_offset = 10;
-static int y_offset = 30;
+static int squareSize = 40;
+static int x_offset = 0;
+static int y_offset = 40;
 
 + (int) COLUMNS{
 	return columns;

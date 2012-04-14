@@ -7,14 +7,15 @@
 //
 
 #import "Board.h"
+#import "BoardView.h"
 #import "Controller.h"
-#import "ChessSquare.h"
 #import "ColorEnum.h"
 #import "ColumnEnum.h"
 #import "Constants.h"
 #import "GlobalEvents.h"
 #import "History.h"
 #import "Move.h"
+#import "Piece.h"
 #import "PieceFactory.h"
 #import "PieceView.h"
 #import "RowEnum.h"
@@ -32,20 +33,19 @@ Move *move;
 	return self;
 }
 - (id) initWithModel:(History*)history{
-	
 	model = history;
 	rules = [[Rules alloc] initWithModel:history];
 	return [self init];
 }
 - (void) movePiece:(Move *)move{
-	
 	Board *board = model.currentMove;
 	Piece *currentPiece = [board getSquare:move.fromColumn :move.fromRow];
 
-	if ([rules isMoveValid:move]){
+	if ([rules isValidMove:move]){
 		[board clearSquare:move.fromColumn :move.fromRow];
 		[board setSquare:move.toColumn :move.toRow :currentPiece];
 		[model addMove:board];
+		currentPiece.moved = true;
 	}
 	else{
 		[model refresh];
@@ -104,23 +104,23 @@ Move *move;
 	
 	NSDictionary *dict = [notification userInfo];
 	UITouch *touch = [dict objectForKey:[GlobalEvents MOUSEDOWN_EVENT_DATA]];
-	CGPoint pos = [touch locationInView: [UIApplication sharedApplication].keyWindow];
 	
 	[move reset];
-	move.fromColumn = floor((pos.x-[Constants X_OFFSET])/[Constants SQUARE_SIZE]);
-	move.fromRow = floor((pos.y-[Constants Y_OFFSET])/[Constants SQUARE_SIZE]);
+	move.fromColumn = [BoardView getColumnFromTouch: touch];
+	move.fromRow = [BoardView getRowFromTouch: touch];
 }
 
 - (void) mouseUpEventHandler:(NSNotification *)notification{
 
 	NSDictionary *dict = [notification userInfo];
 	UITouch *touch = [dict objectForKey:[GlobalEvents MOUSEUP_EVENT_DATA]];
-	CGPoint pos = [touch locationInView: [UIApplication sharedApplication].keyWindow];
 
-	move.toColumn = floor((pos.x-[Constants X_OFFSET])/[Constants SQUARE_SIZE]);
-	move.toRow = floor((pos.y-[Constants Y_OFFSET])/[Constants SQUARE_SIZE]);
+	move.toColumn = [BoardView getColumnFromTouch: touch];
+	move.toRow = [BoardView getRowFromTouch: touch];
 
 	[self movePiece:move];
 }
+
+
 
 @end
