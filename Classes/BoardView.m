@@ -75,8 +75,8 @@ NSMutableArray *imageViews;
 	PieceView *pieceView = [[PieceView alloc] initWithImage:image];
 	pieceView.userInteractionEnabled = YES;
 	pieceView.opaque = YES;
-	pieceView.frame = CGRectMake((column*[Constants SQUARE_SIZE])+1.7,  // 1.7 is needed to center piece (horizontally)
-								 [Constants Y_OFFSET] + (([Constants ROWS]-row-1)*[Constants SQUARE_SIZE])+.7,	  // .7 is needed to center piece (vertically)
+	pieceView.frame = CGRectMake([Constants X_OFFSET] + (column*[Constants SQUARE_SIZE])+1.7,  // 1.7 is needed to center piece (horizontally)
+								 [Constants Y_OFFSET] + (([Constants ROWS]-1-row)*[Constants SQUARE_SIZE])+.7,	  // .7 is needed to center piece (vertically)
 								 [Constants SQUARE_SIZE]*.9, 
 								 [Constants SQUARE_SIZE]*.9); 
 	
@@ -136,15 +136,7 @@ NSMutableArray *imageViews;
 - (void)dealloc {    [super dealloc];}
 
 	
-// static
-+ (int) getColumnFromTouch:(UITouch *)touch{
-	CGPoint point = [touch locationInView: [UIApplication sharedApplication].keyWindow];
-	return floor((point.x-[Constants X_OFFSET])/[Constants SQUARE_SIZE]);
-}
-+ (int) getRowFromTouch:(UITouch *)touch{
-	CGPoint point = [touch locationInView: [UIApplication sharedApplication].keyWindow];
-	return [Constants ROWS]-1-floor((point.y-[Constants Y_OFFSET])/[Constants SQUARE_SIZE]);
-}
+
 
 
 

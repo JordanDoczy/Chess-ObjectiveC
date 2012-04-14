@@ -7,6 +7,7 @@
 //
 
 #import "GlobalFunctions.h"
+#import "Constants.h"
 
 @implementation GlobalFunctions
 
@@ -104,6 +105,15 @@
 	}
 	return nil;
 	
+}
+
++ (int) getColumnFromTouch:(UITouch *)touch{
+	CGPoint point = [touch locationInView: [UIApplication sharedApplication].keyWindow];
+	return floor((point.x-[Constants X_OFFSET])/[Constants SQUARE_SIZE]);
+}
++ (int) getRowFromTouch:(UITouch *)touch{
+	CGPoint point = [touch locationInView: [UIApplication sharedApplication].keyWindow];
+	return [Constants ROWS]-1-floor((point.y-[Constants Y_OFFSET])/[Constants SQUARE_SIZE]);
 }
 
 @end

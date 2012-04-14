@@ -27,6 +27,7 @@
 - (NSString*)display;
 - (id) init:(ColorEnum)_color;
 - (BOOL) isValidMove:(Move *)move :(Board *)board;
+- (BOOL) isCaptureAttempt:(Piece *)piece;
 
 
 @end

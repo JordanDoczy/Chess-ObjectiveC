@@ -10,9 +10,10 @@
 #import "ColorEnum.h"
 #import "ColumnEnum.h"
 #import "Constants.h"
-#import "RowEnum.h"
-#import "Piece.h"
+#import "Move.h"
 #import "NullPiece.h"
+#import "Piece.h"
+#import "RowEnum.h"
 
 
 @implementation Board
@@ -62,6 +63,87 @@
     Board *copy = [[[self class] allocWithZone: zone] init];
 	copy.squares = [[NSMutableArray alloc] initWithArray:squares copyItems:NO];
 	return copy;
+}
+
+- (BOOL) isAdjacentColumn:(Move *)move{
+	return abs(move.fromColumn - move.toColumn) == 1;
+}
+
+- (BOOL) isColumnRangeEmpty:(ColumnEnum)column :(RowEnum)fromRow :(RowEnum)toRow{	
+	
+	if(fromRow < toRow){
+		for (int i=fromRow+1; i<toRow; i++) {
+			if (![self isSquareEmpty:column :i]) return false;
+		}
+	}
+	else return [self isColumnRangeEmpty:column :toRow :fromRow];
+	
+	return true;
+}
+
+- (BOOL) isDiagonalRangeEmpty:(Move *) move{	
+	
+	int c;
+	int r;
+	
+	if(move.fromColumn < move.toColumn){
+		for (c=move.fromColumn; c<move.toColumn; c++) {
+			
+			if(move.fromRow < move.toRow){
+				for (r=move.fromRow; r<move.toRow; r++) {
+					if (![self isSquareEmpty:c :r]) return false;					
+				}
+			}
+			else{
+				for (r=move.toRow; r>move.fromRow; r--) {
+					if (![self isSquareEmpty:c :r]) return false;					
+				}
+			}
+			
+		}
+	}
+	else{
+		for (c=move.toColumn; c>move.fromColumn; c--) {
+			
+			if(move.fromRow < move.toRow){
+				for (r=move.fromRow; r<move.toRow; r++) {
+					if (![self isSquareEmpty:c :r]) return false;					
+				}
+			}
+			else{
+				for (r=move.toRow; r>move.fromRow; r--) {
+					if (![self isSquareEmpty:c :r]) return false;					
+				}
+			}
+			
+		}
+	}
+	
+	return true;
+}
+
+- (BOOL) isRangeEmpty:(Move *)move{
+	
+	if(move.fromColumn == move.toColumn) return [self isColumnRangeEmpty:move.fromColumn :move.fromRow :move.toRow];
+	if(move.fromRow == move.toRow) return [self isRowRangeEmpty:move.fromRow :move.fromColumn :move.toColumn];	
+	else return [self isDiagonalRangeEmpty:move];
+}
+
+- (BOOL) isRowRangeEmpty:(RowEnum)row :(ColumnEnum)fromColumn :(ColumnEnum)toColumn{	
+	
+	if(fromColumn < toColumn){
+		for (int i=fromColumn; i<toColumn; i++) {
+			if (![self isSquareEmpty:i :row]) return false;
+		}
+	}
+	else return [self isRowRangeEmpty:row :toColumn :fromColumn];
+	
+	return true;
+}
+
+
+- (BOOL) isSquareEmpty:(ColumnEnum)column :(RowEnum)row{
+	return [[self getSquare:column :row] isKindOfClass:[NullPiece class]];
 }
 
 

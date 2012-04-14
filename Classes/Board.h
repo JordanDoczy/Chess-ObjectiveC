@@ -7,6 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ColumnEnum.h"
+#import "RowEnum.h"
+
+@class Move;
 @class Piece;
 
 @interface Board : NSObject { }
@@ -23,6 +27,14 @@
 - (void) initSquares;
 - (void) setSquare:(int)index :(Piece *)piece;
 - (void) setSquare:(int)column :(int)row :(Piece *)piece;
+
+- (BOOL) isAdjacentColumn:(Move *)move;
+- (BOOL) isColumnRangeEmpty:(ColumnEnum)column :(RowEnum)fromRow :(RowEnum)toRow;
+- (BOOL) isDiagonalRangeEmpty:(Move *) move;
+- (BOOL) isRangeEmpty:(Move *)move;
+- (BOOL) isRowRangeEmpty:(RowEnum)row :(ColumnEnum)fromColumn :(ColumnEnum)toColumn;
+- (BOOL) isSquareEmpty:(ColumnEnum)column :(RowEnum)row;
+
 
 @property (nonatomic, retain) NSMutableArray *squares;
 	

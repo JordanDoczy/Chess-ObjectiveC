@@ -9,10 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "Piece.h"
 
-@interface Pawn : Piece {
+@interface Pawn : Piece { }
 
-}
-
+- (int) getRowDistance:(Move *)move;
 
 
 @end

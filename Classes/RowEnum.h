@@ -6,19 +6,6 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-/*
-typedef enum {
-	Eight,
-	Seven,
-	Six,
-	Five,
-	Four,
-	Three,
-	Two,
-	One
-} RowEnum;
-*/
-
 typedef enum {
 	One,
 	Two,

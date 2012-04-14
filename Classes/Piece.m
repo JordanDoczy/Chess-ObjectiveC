@@ -9,6 +9,7 @@
 #import "Board.h"
 #import "GlobalFunctions.h"
 #import "Move.h"
+#import "NullPiece.h"
 #import "Piece.h"
 
 @implementation Piece
@@ -41,9 +42,14 @@
 }
 
 - (BOOL) isValidMove:(Move *)move :(Board *)board{
-	//Piece *to = [board getSquare: move.toColumn :move.toRow];
-	
 	return true;
 }
+
+- (BOOL) isCaptureAttempt:(Piece *)piece{
+	if([piece isKindOfClass:[NullPiece class]]) return false;
+	if(self.color == piece.color) return false;
+	return true;
+}
+
 
 @end

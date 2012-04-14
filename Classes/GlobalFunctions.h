@@ -6,6 +6,7 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import "ColorEnum.h"
 #import "ColumnEnum.h"
@@ -20,5 +21,8 @@
 + (NSString*) columnEnumToString:(ColumnEnum)column;
 + (NSString*) pieceEnumToString:(PieceEnum)piece;
 + (NSString*) rowEnumToString:(RowEnum)row;
+
++ (int) getColumnFromTouch:(UITouch *)touch;
++ (int) getRowFromTouch:(UITouch *)touch;
 
 @end

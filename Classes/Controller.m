@@ -13,6 +13,7 @@
 #import "ColumnEnum.h"
 #import "Constants.h"
 #import "GlobalEvents.h"
+#import "GlobalFunctions.h"
 #import "History.h"
 #import "Move.h"
 #import "Piece.h"
@@ -106,8 +107,8 @@ Move *move;
 	UITouch *touch = [dict objectForKey:[GlobalEvents MOUSEDOWN_EVENT_DATA]];
 	
 	[move reset];
-	move.fromColumn = [BoardView getColumnFromTouch: touch];
-	move.fromRow = [BoardView getRowFromTouch: touch];
+	move.fromColumn = [GlobalFunctions getColumnFromTouch: touch];
+	move.fromRow = [GlobalFunctions getRowFromTouch: touch];
 }
 
 - (void) mouseUpEventHandler:(NSNotification *)notification{
@@ -115,8 +116,8 @@ Move *move;
 	NSDictionary *dict = [notification userInfo];
 	UITouch *touch = [dict objectForKey:[GlobalEvents MOUSEUP_EVENT_DATA]];
 
-	move.toColumn = [BoardView getColumnFromTouch: touch];
-	move.toRow = [BoardView getRowFromTouch: touch];
+	move.toColumn = [GlobalFunctions getColumnFromTouch: touch];
+	move.toRow = [GlobalFunctions getRowFromTouch: touch];
 
 	[self movePiece:move];
 }

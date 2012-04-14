@@ -20,6 +20,5 @@
 
 - (id) initWithModel:(History *)history;
 - (BOOL) isValidMove:(Move *)move;
-+ (BOOL) isSameColor:(Piece *)from :(Piece *)to;
 
 @end
