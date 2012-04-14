@@ -35,7 +35,7 @@
 		int rowDistance = [self getRowDistance:move];
 
 		if(move.fromColumn != move.toColumn) return false;
-		if(![board isRangeEmpty:move]) return false;
+		if(![board isRowRangeEmpty:move]) return false;
 		if(rowDistance > maxspaces || rowDistance < 1) return false;
 	}
 	

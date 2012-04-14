@@ -29,10 +29,12 @@
 - (void) setSquare:(int)column :(int)row :(Piece *)piece;
 
 - (BOOL) isAdjacentColumn:(Move *)move;
-- (BOOL) isColumnRangeEmpty:(ColumnEnum)column :(RowEnum)fromRow :(RowEnum)toRow;
+- (BOOL) isColumnRangeEmpty:(Move *)move;
+- (BOOL) isColumnRangeEmpty:(RowEnum)row :(ColumnEnum)fromColumn :(ColumnEnum)toColumn;
 - (BOOL) isDiagonalRangeEmpty:(Move *) move;
 - (BOOL) isRangeEmpty:(Move *)move;
-- (BOOL) isRowRangeEmpty:(RowEnum)row :(ColumnEnum)fromColumn :(ColumnEnum)toColumn;
+- (BOOL) isRowRangeEmpty:(Move *)move;
+- (BOOL) isRowRangeEmpty:(ColumnEnum)column :(RowEnum)fromRow :(RowEnum)toRow;
 - (BOOL) isSquareEmpty:(ColumnEnum)column :(RowEnum)row;
 
 

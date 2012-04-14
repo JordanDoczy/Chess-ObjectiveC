@@ -69,14 +69,19 @@
 	return abs(move.fromColumn - move.toColumn) == 1;
 }
 
-- (BOOL) isColumnRangeEmpty:(ColumnEnum)column :(RowEnum)fromRow :(RowEnum)toRow{	
+
+- (BOOL) isColumnRangeEmpty:(Move *)move{
+	[self isColumnRangeEmpty:move.fromRow :move.fromColumn :move.toColumn];
+}
+
+- (BOOL) isColumnRangeEmpty:(RowEnum)row :(ColumnEnum)fromColumn :(ColumnEnum)toColumn{	
 	
-	if(fromRow < toRow){
-		for (int i=fromRow+1; i<toRow; i++) {
-			if (![self isSquareEmpty:column :i]) return false;
+	if(fromColumn < toColumn){
+		for (int i=fromColumn; i<toColumn; i++) {
+			if (![self isSquareEmpty:i :row]) return false;
 		}
 	}
-	else return [self isColumnRangeEmpty:column :toRow :fromRow];
+	else return [self isRowRangeEmpty:row :toColumn :fromColumn];
 	
 	return true;
 }
@@ -124,23 +129,26 @@
 
 - (BOOL) isRangeEmpty:(Move *)move{
 	
-	if(move.fromColumn == move.toColumn) return [self isColumnRangeEmpty:move.fromColumn :move.fromRow :move.toRow];
-	if(move.fromRow == move.toRow) return [self isRowRangeEmpty:move.fromRow :move.fromColumn :move.toColumn];	
+	if(move.fromColumn == move.toColumn) return [self isRowRangeEmpty:move];
+	if(move.fromRow == move.toRow) return [self isColumnRangeEmpty:move];	
 	else return [self isDiagonalRangeEmpty:move];
 }
 
-- (BOOL) isRowRangeEmpty:(RowEnum)row :(ColumnEnum)fromColumn :(ColumnEnum)toColumn{	
+- (BOOL) isRowRangeEmpty:(Move *)move{	
+	return [self isRowRangeEmpty :move.fromColumn :move.fromRow :move.toRow];
+}
+
+- (BOOL) isRowRangeEmpty:(ColumnEnum)column :(RowEnum)fromRow :(RowEnum)toRow{	
 	
-	if(fromColumn < toColumn){
-		for (int i=fromColumn; i<toColumn; i++) {
-			if (![self isSquareEmpty:i :row]) return false;
+	if(fromRow < toRow){
+		for (int i=fromRow+1; i<toRow; i++) {
+			if (![self isSquareEmpty:column :i]) return false;
 		}
 	}
-	else return [self isRowRangeEmpty:row :toColumn :fromColumn];
+	else return [self isColumnRangeEmpty:column :toRow :fromRow];
 	
 	return true;
 }
-
 
 - (BOOL) isSquareEmpty:(ColumnEnum)column :(RowEnum)row{
 	return [[self getSquare:column :row] isKindOfClass:[NullPiece class]];
