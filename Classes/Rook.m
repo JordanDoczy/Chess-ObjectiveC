@@ -28,13 +28,13 @@
 
 
 - (BOOL) isValidMove:(Move *)move :(Board *)board{
-	//Piece *to = [board getSquare: move.toColumn :move.toRow];
+	Piece *to = [board getSquare: move.toColumn :move.toRow];
 	
 	if(move.fromColumn == move.toColumn)
-		return [board isRowRangeEmpty:move];
+		return [board isRowRangeEmpty:move :![self isCaptureAttempt:to]];
 	
-	if(move.fromRow == move.toRow)
-		return [board isColumnRangeEmpty:move];
+	//if(move.fromRow == move.toRow)
+	//	return [board isColumnRangeEmpty:move];
 
 	return false;
 }

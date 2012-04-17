@@ -33,7 +33,17 @@ History *model;
 	return true;
 }
 
+/*
+- (BOOL) isCaptureAttempt(Move *)move{
+	Piece *from = [[model currentMove] getSquare:move.fromColumn :move.fromRow];
+	Piece *to = [[model currentMove] getSquare:move.toColumn :move.toRow];
+	if(to
+	return from.color != to.color;
+}
+ */
 
+
+// add capture attempt here?
 // isKingInCheck
 // enPassant
 // promotePawn

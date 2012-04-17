@@ -71,7 +71,7 @@
 
 
 - (BOOL) isColumnRangeEmpty:(Move *)move{
-	[self isColumnRangeEmpty:move.fromRow :move.fromColumn :move.toColumn];
+	return [self isColumnRangeEmpty:move.fromRow :move.fromColumn :move.toColumn];
 }
 
 - (BOOL) isColumnRangeEmpty:(RowEnum)row :(ColumnEnum)fromColumn :(ColumnEnum)toColumn{	
@@ -134,8 +134,38 @@
 	else return [self isDiagonalRangeEmpty:move];
 }
 
+- (BOOL) isRangeEmptyBetween:(Move *)move{
+	
+	return true;
+	//if(move.fromColumn == move.toColumn) return [self isRowRangeEmpty:move];
+	//if(move.fromRow == move.toRow) return [self isColumnRangeEmpty:move];	
+	//else return [self isDiagonalRangeEmpty:move];
+}
+
+// allow toItem to be piece?
+
 - (BOOL) isRowRangeEmpty:(Move *)move{	
-	return [self isRowRangeEmpty :move.fromColumn :move.fromRow :move.toRow];
+	return [self isRowRangeEmpty:move :true];
+}
+
+- (BOOL) isRowRangeEmpty:(Move *)move :(BOOL)includeToSquare{	
+	
+	int i;
+	int offset = 0;
+	if(!includeToSquare) offset = 1;
+
+	if(move.fromRow < move.toRow){
+		for (i=move.fromRow+1; i<=move.toRow-offset; i++) {
+			if (![self isSquareEmpty:move.fromColumn :i]) return false;
+		}
+	}
+	else{
+		for (i=move.toRow+offset; i<=move.fromRow-1; i++) {
+			if (![self isSquareEmpty:move.fromColumn :i]) return false;
+		}
+	}
+	
+	return true;
 }
 
 - (BOOL) isRowRangeEmpty:(ColumnEnum)column :(RowEnum)fromRow :(RowEnum)toRow{	

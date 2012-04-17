@@ -19,7 +19,4 @@
 - (id)   initWithModel:(History*)history;
 - (void) removeAllImages;
 
-+ (int) getColumnFromTouch:(UITouch *)touch;
-+ (int) getRowFromTouch:(UITouch *)touch;
-
 @end
