@@ -20,7 +20,7 @@
 	return self;
 }
 
-- (BOOL) isValidMove:(Move *)move :(Board *)board{
+- (BOOL) isValidMove:(Move *)move :(Board *)board :(BOOL)isCapture{
 	Piece *to = [board getSquare: move.toColumn :move.toRow];
 	
 	int rowDistance = abs(move.fromRow - move.toRow);

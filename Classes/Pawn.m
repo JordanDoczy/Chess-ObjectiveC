@@ -20,10 +20,8 @@
 	return self;
 }
 
-- (BOOL) isValidMove:(Move *)move :(Board *)board{
-	Piece *to = [board getSquare: move.toColumn :move.toRow];
-
-	if([self isCaptureAttempt:to]){
+- (BOOL) isValidMove:(Move *)move :(Board *)board :(BOOL)isCapture{
+	if(isCapture){
 		if(![board isAdjacentColumn:move]) return false;
 		if([self getRowDistance:move] != 1) return false;
 		
@@ -35,7 +33,7 @@
 		int rowDistance = [self getRowDistance:move];
 
 		if(move.fromColumn != move.toColumn) return false;
-		if(![board isRowRangeEmpty:move]) return false;
+		if(![board isRowRangeEmpty:move :false :false]) return false;
 		if(rowDistance > maxspaces || rowDistance < 1) return false;
 	}
 	

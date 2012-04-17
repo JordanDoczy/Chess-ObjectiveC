@@ -69,19 +69,22 @@
 	return abs(move.fromColumn - move.toColumn) == 1;
 }
 
+- (BOOL) isColumnRangeEmpty:(Move *)move :(BOOL)includeFromSquare :(BOOL)includeToSquare{	
 
-- (BOOL) isColumnRangeEmpty:(Move *)move{
-	return [self isColumnRangeEmpty:move.fromRow :move.fromColumn :move.toColumn];
-}
-
-- (BOOL) isColumnRangeEmpty:(RowEnum)row :(ColumnEnum)fromColumn :(ColumnEnum)toColumn{	
+	int i;
+	int start = 0 ? includeFromSquare : 1;
+	int end = 0 ? includeToSquare : 1;
 	
-	if(fromColumn < toColumn){
-		for (int i=fromColumn; i<toColumn; i++) {
-			if (![self isSquareEmpty:i :row]) return false;
+	if(move.fromRow < move.toRow){
+		for (i=move.fromRow+start; i<=move.toRow-end; i++) {
+			if (![self isSquareEmpty:i :move.fromRow]) return false;
 		}
 	}
-	else return [self isRowRangeEmpty:row :toColumn :fromColumn];
+	else{
+		for (i=move.toRow+end; i<=move.fromRow-start; i++) {
+			if (![self isSquareEmpty:i :move.fromRow]) return false;
+		}
+	}
 	
 	return true;
 }
@@ -127,40 +130,19 @@
 	return true;
 }
 
-- (BOOL) isRangeEmpty:(Move *)move{
-	
-	if(move.fromColumn == move.toColumn) return [self isRowRangeEmpty:move];
-	if(move.fromRow == move.toRow) return [self isColumnRangeEmpty:move];	
-	else return [self isDiagonalRangeEmpty:move];
-}
-
-- (BOOL) isRangeEmptyBetween:(Move *)move{
-	
-	return true;
-	//if(move.fromColumn == move.toColumn) return [self isRowRangeEmpty:move];
-	//if(move.fromRow == move.toRow) return [self isColumnRangeEmpty:move];	
-	//else return [self isDiagonalRangeEmpty:move];
-}
-
-// allow toItem to be piece?
-
-- (BOOL) isRowRangeEmpty:(Move *)move{	
-	return [self isRowRangeEmpty:move :true];
-}
-
-- (BOOL) isRowRangeEmpty:(Move *)move :(BOOL)includeToSquare{	
+- (BOOL) isRowRangeEmpty:(Move *)move :(BOOL)includeFromSquare :(BOOL)includeToSquare{	
 	
 	int i;
-	int offset = 0;
-	if(!includeToSquare) offset = 1;
+	int start = 0 ? includeFromSquare : 1;
+	int end = 0 ? includeToSquare : 1;
 
 	if(move.fromRow < move.toRow){
-		for (i=move.fromRow+1; i<=move.toRow-offset; i++) {
+		for (i=move.fromRow+start; i<=move.toRow-end; i++) {
 			if (![self isSquareEmpty:move.fromColumn :i]) return false;
 		}
 	}
 	else{
-		for (i=move.toRow+offset; i<=move.fromRow-1; i++) {
+		for (i=move.toRow+end; i<=move.fromRow-start; i++) {
 			if (![self isSquareEmpty:move.fromColumn :i]) return false;
 		}
 	}
@@ -168,17 +150,6 @@
 	return true;
 }
 
-- (BOOL) isRowRangeEmpty:(ColumnEnum)column :(RowEnum)fromRow :(RowEnum)toRow{	
-	
-	if(fromRow < toRow){
-		for (int i=fromRow+1; i<toRow; i++) {
-			if (![self isSquareEmpty:column :i]) return false;
-		}
-	}
-	else return [self isColumnRangeEmpty:column :toRow :fromRow];
-	
-	return true;
-}
 
 - (BOOL) isSquareEmpty:(ColumnEnum)column :(RowEnum)row{
 	return [[self getSquare:column :row] isKindOfClass:[NullPiece class]];

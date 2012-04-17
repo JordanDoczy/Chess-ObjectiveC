@@ -28,20 +28,31 @@ History *model;
 - (BOOL) isValidMove:(Move *)move{
 	Piece *from = [[model currentMove] getSquare:move.fromColumn :move.fromRow];
 	
-	if(![from isValidMove:move :[model currentMove]]) return false;
+	BOOL toSquareEmpty = [self isToEmpty:move];
+	BOOL captureAttempt = [self isCaptureAttempt:move];
+	
+	if(!toSquareEmpty && !captureAttempt) return false;
+	if(![from isValidMove:move :[model currentMove] :captureAttempt]) return false;
 	
 	return true;
 }
 
-/*
-- (BOOL) isCaptureAttempt(Move *)move{
+- (BOOL) isCaptureAttempt:(Move *)move{
 	Piece *from = [[model currentMove] getSquare:move.fromColumn :move.fromRow];
 	Piece *to = [[model currentMove] getSquare:move.toColumn :move.toRow];
-	if(to
-	return from.color != to.color;
+	
+	if([from isKindOfClass:[NullPiece class]]) return false;
+	if([to isKindOfClass:[NullPiece class]]) return false;
+	if(from.color == to.color) return false;
+	
+	return true;
 }
- */
 
+- (BOOL) isToEmpty:(Move *)move{
+	Piece *to = [[model currentMove] getSquare:move.toColumn :move.toRow];
+	
+	return [to isKindOfClass:[NullPiece class]];
+}
 
 // add capture attempt here?
 // isKingInCheck

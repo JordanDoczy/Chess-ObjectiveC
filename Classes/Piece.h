@@ -26,8 +26,7 @@
 - (id) copyWithZone:(NSZone *)zone;
 - (NSString*)display;
 - (id) init:(ColorEnum)_color;
-- (BOOL) isValidMove:(Move *)move :(Board *)board;
-- (BOOL) isCaptureAttempt:(Piece *)piece;
+- (BOOL) isValidMove:(Move *)move :(Board *)board :(BOOL)isCapture;
 
 
 @end

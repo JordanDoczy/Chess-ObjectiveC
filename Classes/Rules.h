@@ -19,6 +19,8 @@
 }
 
 - (id) initWithModel:(History *)history;
+- (BOOL) isCaptureAttempt:(Move *)move;
+- (BOOL) isToEmpty:(Move *)move;
 - (BOOL) isValidMove:(Move *)move;
 
 @end

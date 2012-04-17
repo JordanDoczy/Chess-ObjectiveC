@@ -41,15 +41,10 @@
     return copy;
 }
 
-- (BOOL) isValidMove:(Move *)move :(Board *)board{
+- (BOOL) isValidMove:(Move *)move :(Board *)board :(BOOL)isCapture{
 	return true;
 }
 
-- (BOOL) isCaptureAttempt:(Piece *)piece{
-	if([piece isKindOfClass:[NullPiece class]]) return false;
-	if(self.color == piece.color) return false;
-	return true;
-}
 
 
 @end
