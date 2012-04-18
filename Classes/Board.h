@@ -30,7 +30,8 @@
 
 - (BOOL) isAdjacentColumn:(Move *)move;
 - (BOOL) isColumnRangeEmpty:(Move *)move :(BOOL)includeFromSquare :(BOOL)includeToSquare;
-- (BOOL) isDiagonalRangeEmpty:(Move *) move;
+- (BOOL) isDiagonal:(Move *) move;
+- (BOOL) isDiagonalRangeEmpty:(Move *) move :(BOOL)includeFromSquare :(BOOL)includeToSquare;
 - (BOOL) isRowRangeEmpty:(Move *)move :(BOOL)includeFromSquare :(BOOL)includeToSquare;
 - (BOOL) isSquareEmpty:(ColumnEnum)column :(RowEnum)row;
 

@@ -72,8 +72,8 @@
 - (BOOL) isColumnRangeEmpty:(Move *)move :(BOOL)includeFromSquare :(BOOL)includeToSquare{	
 
 	int i;
-	int start = 0 ? includeFromSquare : 1;
-	int end = 0 ? includeToSquare : 1;
+	int start = includeFromSquare ? 0 : 1;
+	int end = includeToSquare ? 0 : 1;
 	
 	if(move.fromRow < move.toRow){
 		for (i=move.fromRow+start; i<=move.toRow-end; i++) {
@@ -89,41 +89,45 @@
 	return true;
 }
 
-- (BOOL) isDiagonalRangeEmpty:(Move *) move{	
+- (BOOL) isDiagonal:(Move *) move{
+	return abs(move.fromColumn - move.toColumn) == abs(move.fromRow - move.toRow);
+}
+
+- (BOOL) isDiagonalRangeEmpty:(Move *) move :(BOOL)includeFromSquare :(BOOL)includeToSquare{	
 	
-	int c;
-	int r;
+	int start = includeFromSquare ? 0 : 1;
+	int end = includeToSquare ? 0 : 1;
 	
-	if(move.fromColumn < move.toColumn){
-		for (c=move.fromColumn; c<move.toColumn; c++) {
-			
-			if(move.fromRow < move.toRow){
-				for (r=move.fromRow; r<move.toRow; r++) {
-					if (![self isSquareEmpty:c :r]) return false;					
-				}
-			}
-			else{
-				for (r=move.toRow; r>move.fromRow; r--) {
-					if (![self isSquareEmpty:c :r]) return false;					
-				}
-			}
-			
+	int c=0;
+	int r=0;
+	
+	
+	if(move.fromColumn < move.toColumn && move.fromRow < move.toRow) {
+		r=move.fromRow+start;
+		for (c=move.fromColumn+start; c<=move.toColumn-end; c++){
+			if (![self isSquareEmpty:c :r]) return false;
+			r++;
 		}
 	}
-	else{
-		for (c=move.toColumn; c>move.fromColumn; c--) {
-			
-			if(move.fromRow < move.toRow){
-				for (r=move.fromRow; r<move.toRow; r++) {
-					if (![self isSquareEmpty:c :r]) return false;					
-				}
-			}
-			else{
-				for (r=move.toRow; r>move.fromRow; r--) {
-					if (![self isSquareEmpty:c :r]) return false;					
-				}
-			}
-			
+	if(move.fromColumn < move.toColumn && move.fromRow > move.toRow) {
+		r=move.fromRow-start;
+		for (c=move.fromColumn+start; c<=move.toColumn-end; c++){
+			if (![self isSquareEmpty:c :r]) return false;
+			r--;
+		}
+	}
+	if(move.fromColumn > move.toColumn && move.fromRow < move.toRow) {
+		r=move.fromRow+start;
+		for (c=move.fromColumn-start; c>=move.toColumn+end; c--){
+			if (![self isSquareEmpty:c :r]) return false;
+			r++;
+		}
+	}
+	if(move.fromColumn > move.toColumn && move.fromRow > move.toRow) {
+		r=move.fromRow-start;
+		for (c=move.fromColumn-start; c>=move.toColumn+end; c--){
+			if (![self isSquareEmpty:c :r]) return false;
+			r--;
 		}
 	}
 	
@@ -133,8 +137,8 @@
 - (BOOL) isRowRangeEmpty:(Move *)move :(BOOL)includeFromSquare :(BOOL)includeToSquare{	
 	
 	int i;
-	int start = 0 ? includeFromSquare : 1;
-	int end = 0 ? includeToSquare : 1;
+	int start = includeFromSquare ? 0 : 1;
+	int end = includeToSquare ? 0 : 1;
 
 	if(move.fromRow < move.toRow){
 		for (i=move.fromRow+start; i<=move.toRow-end; i++) {

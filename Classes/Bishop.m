@@ -20,6 +20,13 @@
 	return self;
 }
 
+- (BOOL) isValidMove:(Move *)move :(Board *)board :(BOOL)isCapture{
+	
+	if(![board isDiagonal:move]) return false;
+		return [board isDiagonalRangeEmpty:move :false :false];
+	
+	return false;
+}
 
 
 @end
