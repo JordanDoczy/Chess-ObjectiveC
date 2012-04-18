@@ -34,6 +34,7 @@ BoardView *view;
 	view = [[BoardView alloc] initWithModel:model];
 	controller = [[Controller alloc] initWithModel:model];
 
+	// move to controller class
 	[[NSNotificationCenter defaultCenter] addObserver:controller selector:@selector(mouseDownEventHandler:) name:[GlobalEvents MOUSEDOWN_EVENT] object:view ];
 	[[NSNotificationCenter defaultCenter] addObserver:controller selector:@selector(mouseUpEventHandler:) name:[GlobalEvents MOUSEUP_EVENT] object:view ];
 

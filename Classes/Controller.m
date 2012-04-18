@@ -97,6 +97,7 @@ Move *move;
 	[board setSquare:H :Seven :[PieceFactory createPiece:PawnPiece   :Black]];
 	
 	[model addMove:board];
+	
 }
 - (void) undo{ 
 	model.currentIndex--;

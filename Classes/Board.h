@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ColorEnum.h"
 #import "ColumnEnum.h"
 #import "RowEnum.h"
 
@@ -34,6 +35,8 @@
 - (BOOL) isDiagonalRangeEmpty:(Move *) move :(BOOL)includeFromSquare :(BOOL)includeToSquare;
 - (BOOL) isRowRangeEmpty:(Move *)move :(BOOL)includeFromSquare :(BOOL)includeToSquare;
 - (BOOL) isSquareEmpty:(ColumnEnum)column :(RowEnum)row;
+
+- (NSArray *) getPieces:(ColumnEnum)color;
 
 
 @property (nonatomic, retain) NSMutableArray *squares;

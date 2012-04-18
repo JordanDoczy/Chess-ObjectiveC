@@ -54,7 +54,6 @@ History *model;
 	return [to isKindOfClass:[NullPiece class]];
 }
 
-// add capture attempt here?
 // isKingInCheck
 // enPassant
 // promotePawn

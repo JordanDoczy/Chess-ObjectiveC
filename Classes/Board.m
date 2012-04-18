@@ -159,6 +159,10 @@
 	return [[self getSquare:column :row] isKindOfClass:[NullPiece class]];
 }
 
+- (NSArray *) getPieces:(ColumnEnum)color{
+	NSPredicate *pred = [NSPredicate predicateWithFormat:@"color == %i", color];
+	return [squares filteredArrayUsingPredicate:pred];
+}
 
 
 
