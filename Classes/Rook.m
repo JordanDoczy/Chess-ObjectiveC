@@ -21,12 +21,6 @@
 	
 }
 
-// TODO
-// - fix isRangeEmpty Methods
-// - issue: dont include start square
-// - issue: end square can be non-empty (enemy piece)
-
-
 - (BOOL) isValidMove:(Move *)move :(Board *)board :(BOOL)isCapture{
 	if(move.fromColumn == move.toColumn)
 		return [board isRowRangeEmpty:move :false :false];

@@ -7,6 +7,7 @@
 //
 
 #import "King.h"
+#import "Move.h"
 
 @implementation King
 
@@ -16,6 +17,10 @@
 	super.name = @"King";
 	[super init: _color];
 	return self;
+}
+
+- (BOOL) isValidMove:(Move *)move :(Board *)board :(BOOL)isCapture{
+	return abs(move.fromColumn - move.toColumn) <= 1 && abs(move.fromRow - move.toRow) <= 1;
 }
 
 
