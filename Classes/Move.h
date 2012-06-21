@@ -7,22 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ColumnEnum.h"
-#import "RowEnum.h"
+#import "Square.h"
 
 @interface Move : NSObject {
-	ColumnEnum fromColumn;
-	RowEnum fromRow;
-	ColumnEnum toColumn;
-	RowEnum toRow;
 }
 
-@property (nonatomic) ColumnEnum fromColumn;
-@property (nonatomic) RowEnum fromRow;
-@property (nonatomic) ColumnEnum toColumn;
-@property (nonatomic) RowEnum toRow;
+@property (nonatomic, retain) Square *fromSquare;
+@property (nonatomic, retain) Square *toSquare;
 
-- (id) init:(ColumnEnum)_fromColumn :(RowEnum)_fromRow :(ColumnEnum)_toColumn :(RowEnum)_toRow;
+- (id) init:(ColumnEnum)fromColumn :(RowEnum)fromRow :(ColumnEnum)toColumn :(RowEnum)toRow;
+- (id) initWithSquares:(Square*)_fromSquare :(Square*)_toSquare;
 - (void) reset;
+- (void) test:(Square*)s;
+
 	
 @end

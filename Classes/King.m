@@ -20,7 +20,7 @@
 }
 
 - (BOOL) isValidMove:(Move *)move :(Board *)board :(BOOL)isCapture{
-	return abs(move.fromColumn - move.toColumn) <= 1 && abs(move.fromRow - move.toRow) <= 1;
+	return abs(move.fromSquare.column - move.toSquare.column) <= 1 && abs(move.fromSquare.row - move.toSquare.row) <= 1;
 }
 
 - (NSMutableArray*) getPossibleMoves:(Board *)board :(ColumnEnum)column :(RowEnum)row{

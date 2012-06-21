@@ -10,25 +10,27 @@
 
 @implementation Move
 
-@synthesize fromColumn;
-@synthesize fromRow;
-@synthesize toColumn;
-@synthesize toRow;
+@synthesize fromSquare;
+@synthesize toSquare;
 
-- (id) init:(ColumnEnum)_fromColumn :(RowEnum)_fromRow :(ColumnEnum)_toColumn :(RowEnum)_toRow{
-	fromColumn = _fromColumn;
-	fromRow = _fromRow;
-	toColumn = _toColumn;
-	toRow = _toRow;
-
+- (id) init:(ColumnEnum)fromColumn :(RowEnum)fromRow :(ColumnEnum)toColumn :(RowEnum)toRow{
+	fromSquare = [[Square alloc] init: fromColumn :fromRow];
+	toSquare = [[Square alloc] init: toColumn :toRow];;
 	return self;
 }
 
+- (id) initWithSquares:(Square*)_fromSquare :(Square*)_toSquare{
+	fromSquare = _fromSquare;
+	toSquare = _toSquare;
+	return self;
+}
+
+- (void) test:(Square*)s{
+}
+
 - (void) reset{
-	fromColumn = -1;
-	fromRow = -1;
-	toColumn = -1;
-	toRow = -1;
+	[fromSquare reset];
+	[toSquare reset];
 }
 
 @end

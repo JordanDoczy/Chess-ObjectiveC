@@ -23,15 +23,14 @@
 }
 
 - (BOOL) isValidMove:(Move *)move :(Board *)board :(BOOL)isCapture{
-	if(move.fromColumn == move.toColumn)
+	if(move.fromSquare.column == move.toSquare.column)
 		return [board isRowRangeEmpty:move :false :false];
 	
-	if(move.fromRow == move.toRow)
+	if(move.fromSquare.row == move.toSquare.row)
 		return [board isColumnRangeEmpty:move :false :false];
 	
 	if([board isDiagonal:move])
 		return [board isDiagonalRangeEmpty:move :false :false];
-
 	
 	return false;
 }

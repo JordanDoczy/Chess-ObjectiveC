@@ -7,6 +7,6 @@
 //
 
 typedef enum {
-	Black,
-	White
+	White,
+	Black
 } ColorEnum;

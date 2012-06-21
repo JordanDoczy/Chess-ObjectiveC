@@ -20,6 +20,7 @@
 
 - (id) initWithModel:(History *)history;
 - (BOOL) isCaptureAttempt:(Move *)move;
+- (BOOL) isCorrectColor:(ColorEnum)color;
 - (BOOL) isToEmpty:(Move *)move;
 - (BOOL) isValidMove:(Move *)move;
 

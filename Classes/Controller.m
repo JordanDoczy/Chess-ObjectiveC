@@ -21,6 +21,7 @@
 #import "PieceView.h"
 #import "RowEnum.h"
 #import "Rules.h"
+#import "Square.h"
 
 
 @implementation Controller
@@ -40,11 +41,11 @@ Move *move;
 }
 - (void) movePiece:(Move *)move{
 	Board *board = model.currentMove;
-	Piece *currentPiece = [board getSquare:move.fromColumn :move.fromRow];
+	Piece *currentPiece = [board getSquare:move.fromSquare.column :move.fromSquare.row];
 
 	if ([rules isValidMove:move]){
-		[board clearSquare:move.fromColumn :move.fromRow];
-		[board setSquare:move.toColumn :move.toRow :currentPiece];
+		[board clearSquare:move.fromSquare.column :move.fromSquare.row];
+		[board setSquare:move.toSquare.column :move.toSquare.row :currentPiece];
 		[model addMove:board];
 		currentPiece.moved = true;
 	}
@@ -107,40 +108,15 @@ Move *move;
 	NSDictionary *dict = [notification userInfo];
 	UITouch *touch = [dict objectForKey:[GlobalEvents MOUSEDOWN_EVENT_DATA]];
 	
-	[move reset];
-	move.fromColumn = [GlobalFunctions getColumnFromTouch: touch];
-	move.fromRow = [GlobalFunctions getRowFromTouch: touch];
+	move.fromSquare = [[Square alloc] init :[GlobalFunctions getColumnFromTouch: touch] :[GlobalFunctions getRowFromTouch: touch]];
 }
 
 - (void) mouseUpEventHandler:(NSNotification *)notification{
 
 	NSDictionary *dict = [notification userInfo];
 	UITouch *touch = [dict objectForKey:[GlobalEvents MOUSEUP_EVENT_DATA]];
-
-	move.toColumn = [GlobalFunctions getColumnFromTouch: touch];
-	move.toRow = [GlobalFunctions getRowFromTouch: touch];
-
+	move.toSquare = [[Square alloc] init :[GlobalFunctions getColumnFromTouch: touch] :[GlobalFunctions getRowFromTouch: touch]];
 	[self movePiece:move];
 }
-
-/*
-private bool inCheck(Colors color)
-{
-	return false;
-	
-	King king = model.GetKing(color);
-	List<Piece> pieces = model.GetOppositeColorPieces(color);
-	
-	foreach (Piece piece in pieces)
-	{
-		if (testMove(piece.Square, king.Square))
-		{
-			return true;
-		}
-	}
-	
-	return false;
-}
-*/
 
 @end

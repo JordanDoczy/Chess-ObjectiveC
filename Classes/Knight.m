@@ -22,13 +22,12 @@
 
 - (BOOL) isValidMove:(Move *)move :(Board *)board :(BOOL)isCapture{
 	
-	int rowDistance = abs(move.fromRow - move.toRow);
-	int columnDistance = abs(move.fromColumn - move.toColumn);
+	int rowDistance = abs(move.fromSquare.row - move.toSquare.row);
+	int columnDistance = abs(move.fromSquare.column - move.toSquare.column);
 	
 	if(rowDistance < 1 || rowDistance > 2) return false;
 	if(columnDistance < 1 || columnDistance > 2) return false;
 	if(rowDistance + columnDistance == 3) return true;
-		
 	return false;
 }
 

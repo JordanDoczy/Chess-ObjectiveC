@@ -43,27 +43,12 @@ BoardView *view;
 
 	[controller reset];
 
-	//NSArray *whitePieces = [model.currentMove getPieces:White];
-	//NSMutableArray *moves = [[NSMutableArray alloc] init];
-	//for (Piece *piece in whitePieces) {
-	//	[moves addObjectsFromArray: [piece getPossibleMoves :model.currentMove :A :Two]];
-	//}
-	
-	
-	NSMutableArray *moves = [[NSMutableArray alloc] init];
-	
-	int i=0;
 	Piece *piece;
-	
-	for (i=0; i<[model.currentMove.squares count]; i++) {
-		
+	for (int i=0; i<[model.currentMove.squares count]; i++) {
 		piece = [model.currentMove getSquare:i];
-		//[moves addObjectsFromArray: [piece getPossibleMoves :model.currentMove :[Board getColumn:i] :[Board getRow:i]]];
-		moves = [piece getPossibleMoves :model.currentMove :[Board getColumn:i] :[Board getRow:i]];
-		[Logger logMoves:moves :piece];
+		[Logger logMoves:[piece getPossibleMoves :model.currentMove :[Board getColumn:i] :[Board getRow:i]] :piece];
 	}
 	
-	//[Logger logMoves:moves];
 	
 	[window makeKeyAndVisible];
 	[window addSubview:view];

@@ -66,7 +66,7 @@
 }
 
 - (BOOL) isAdjacentColumn:(Move *)move{
-	return abs(move.fromColumn - move.toColumn) == 1;
+	return abs(move.fromSquare.column - move.toSquare.column) == 1;
 }
 
 - (BOOL) isColumnRangeEmpty:(Move *)move :(BOOL)includeFromSquare :(BOOL)includeToSquare{	
@@ -75,14 +75,14 @@
 	int start = includeFromSquare ? 0 : 1;
 	int end = includeToSquare ? 0 : 1;
 	
-	if(move.fromRow < move.toRow){
-		for (i=move.fromRow+start; i<=move.toRow-end; i++) {
-			if (![self isSquareEmpty:i :move.fromRow]) return false;
+	if(move.fromSquare.row < move.toSquare.row){
+		for (i=move.fromSquare.row+start; i<=move.toSquare.row-end; i++) {
+			if (![self isSquareEmpty:i :move.fromSquare.row]) return false;
 		}
 	}
 	else{
-		for (i=move.toRow+end; i<=move.fromRow-start; i++) {
-			if (![self isSquareEmpty:i :move.fromRow]) return false;
+		for (i=move.toSquare.row+end; i<=move.fromSquare.row-start; i++) {
+			if (![self isSquareEmpty:i :move.fromSquare.row]) return false;
 		}
 	}
 	
@@ -90,7 +90,7 @@
 }
 
 - (BOOL) isDiagonal:(Move *) move{
-	return abs(move.fromColumn - move.toColumn) == abs(move.fromRow - move.toRow);
+	return abs(move.fromSquare.column - move.toSquare.column) == abs(move.fromSquare.row - move.toSquare.row);
 }
 
 - (BOOL) isDiagonalRangeEmpty:(Move *) move :(BOOL)includeFromSquare :(BOOL)includeToSquare{	
@@ -101,31 +101,30 @@
 	int c=0;
 	int r=0;
 	
-	
-	if(move.fromColumn < move.toColumn && move.fromRow < move.toRow) {
-		r=move.fromRow+start;
-		for (c=move.fromColumn+start; c<=move.toColumn-end; c++){
+	if(move.fromSquare.column < move.toSquare.column && move.fromSquare.row < move.toSquare.row) {
+		r=move.fromSquare.row+start;
+		for (c=move.fromSquare.column+start; c<=move.toSquare.column-end; c++){
 			if (![self isSquareEmpty:c :r]) return false;
 			r++;
 		}
 	}
-	if(move.fromColumn < move.toColumn && move.fromRow > move.toRow) {
-		r=move.fromRow-start;
-		for (c=move.fromColumn+start; c<=move.toColumn-end; c++){
+	if(move.fromSquare.column < move.toSquare.column && move.fromSquare.row > move.toSquare.row) {
+		r=move.fromSquare.row-start;
+		for (c=move.fromSquare.column+start; c<=move.toSquare.column-end; c++){
 			if (![self isSquareEmpty:c :r]) return false;
 			r--;
 		}
 	}
-	if(move.fromColumn > move.toColumn && move.fromRow < move.toRow) {
-		r=move.fromRow+start;
-		for (c=move.fromColumn-start; c>=move.toColumn+end; c--){
+	if(move.fromSquare.column > move.toSquare.column && move.fromSquare.row < move.toSquare.row) {
+		r=move.fromSquare.row+start;
+		for (c=move.fromSquare.column-start; c>=move.toSquare.column+end; c--){
 			if (![self isSquareEmpty:c :r]) return false;
 			r++;
 		}
 	}
-	if(move.fromColumn > move.toColumn && move.fromRow > move.toRow) {
-		r=move.fromRow-start;
-		for (c=move.fromColumn-start; c>=move.toColumn+end; c--){
+	if(move.fromSquare.column > move.toSquare.column && move.fromSquare.row > move.toSquare.row) {
+		r=move.fromSquare.row-start;
+		for (c=move.fromSquare.column-start; c>=move.toSquare.column+end; c--){
 			if (![self isSquareEmpty:c :r]) return false;
 			r--;
 		}
@@ -140,14 +139,14 @@
 	int start = includeFromSquare ? 0 : 1;
 	int end = includeToSquare ? 0 : 1;
 
-	if(move.fromRow < move.toRow){
-		for (i=move.fromRow+start; i<=move.toRow-end; i++) {
-			if (![self isSquareEmpty:move.fromColumn :i]) return false;
+	if(move.fromSquare.row < move.toSquare.row){
+		for (i=move.fromSquare.row+start; i<=move.toSquare.row-end; i++) {
+			if (![self isSquareEmpty:move.fromSquare.column :i]) return false;
 		}
 	}
 	else{
-		for (i=move.toRow+end; i<=move.fromRow-start; i++) {
-			if (![self isSquareEmpty:move.fromColumn :i]) return false;
+		for (i=move.toSquare.row+end; i<=move.fromSquare.row-start; i++) {
+			if (![self isSquareEmpty:move.fromSquare.column :i]) return false;
 		}
 	}
 	

@@ -17,8 +17,8 @@
 	NSString *column;
 	NSString *row;
 	for (Move *move in moves) {
-		column = [GlobalFunctions columnEnumToString:move.toColumn];
-		row = [GlobalFunctions rowEnumToString:move.toRow];
+		column = [GlobalFunctions columnEnumToString:move.toSquare.column];
+		row = [GlobalFunctions rowEnumToString:move.toSquare.row];
 		NSLog(@"move: %@%@", column, row);
 	}
 }
@@ -27,9 +27,9 @@
 	NSString *column;
 	NSString *row;
 	for (Move *move in moves) {
-		column = [GlobalFunctions columnEnumToString:move.toColumn];
-		row = [GlobalFunctions rowEnumToString:move.toRow];
-		NSLog(@"piece: %@ %@%@->%@%@", [piece display], [GlobalFunctions columnEnumToString:move.fromColumn], [GlobalFunctions rowEnumToString:move.fromRow], [GlobalFunctions columnEnumToString:move.toColumn], [GlobalFunctions rowEnumToString:move.toRow]);
+		column = [GlobalFunctions columnEnumToString:move.toSquare.column];
+		row = [GlobalFunctions rowEnumToString:move.toSquare.row];
+		NSLog(@"piece: %@ %@%@->%@%@", [piece display], [GlobalFunctions columnEnumToString:move.fromSquare.column], [GlobalFunctions rowEnumToString:move.fromSquare.row], [GlobalFunctions columnEnumToString:move.toSquare.column], [GlobalFunctions rowEnumToString:move.toSquare.row]);
 	}
 }
 
