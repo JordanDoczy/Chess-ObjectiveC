@@ -27,6 +27,7 @@
 	
 	if(move.fromSquare.row == move.toSquare.row)
 		return [board isColumnRangeEmpty:move :false :false];
+	
 	return false;
 }
 

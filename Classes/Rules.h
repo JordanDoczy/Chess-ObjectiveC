@@ -24,5 +24,6 @@
 - (BOOL) isToEmpty:(Move *)move;
 - (BOOL) isValidMove:(Move *)move;
 - (BOOL) isKingInCheck:(Move *)move;
+- (BOOL) isValidCastle:(Move *)move;
 
 @end

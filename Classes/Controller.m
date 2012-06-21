@@ -15,6 +15,7 @@
 #import "GlobalEvents.h"
 #import "GlobalFunctions.h"
 #import "History.h"
+#import "King.h"
 #import "Move.h"
 #import "Piece.h"
 #import "PieceFactory.h"
@@ -39,15 +40,40 @@ Move *move;
 	rules = [[Rules alloc] initWithModel:history];
 	return [self init];
 }
+- (BOOL) isCastleAttempt:(Move *)move{
+	Board *board = [model.currentMove copy];
+	Piece *currentPiece = [board getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
+	BOOL value = false;
+	if([currentPiece isKindOfClass:[King class]]){
+		if(abs(move.fromSquare.column - move.toSquare.column) == 2){
+			value = true;
+		}
+	}
+	
+	[board release];
+	[currentPiece release];
+	return value;
+}
+
 - (void) movePiece:(Move *)move{
 	Board *board = [model.currentMove copy];
 	Piece *currentPiece = [board getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
 
-	if ([rules isValidMove:move]){
-		[board clearSquare:move.fromSquare.column :move.fromSquare.row];
-		[board setSquare:move.toSquare.column :move.toSquare.row :currentPiece];
-		[model addMove:board];
-		currentPiece.moved = true;
+	if([rules isCorrectColor:currentPiece.color]){
+		if([self isCastleAttempt: move]){
+			if ([rules isValidCastle:move]){
+				[board clearSquare:move.fromSquare.column :move.fromSquare.row];
+				[board setSquare:move.toSquare.column :move.toSquare.row :currentPiece];
+				currentPiece.moved = true;
+				[model addMove:board];
+			}
+		}
+		else if ([rules isValidMove:move]){
+			[board clearSquare:move.fromSquare.column :move.fromSquare.row];
+			[board setSquare:move.toSquare.column :move.toSquare.row :currentPiece];
+			currentPiece.moved = true;
+			[model addMove:board];
+		}
 	}
 	else{
 		[model refresh];
