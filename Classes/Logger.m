@@ -33,5 +33,9 @@
 	NSLog(@"%@%@", [GlobalFunctions columnEnumToString:square.column], [GlobalFunctions rowEnumToString:square.row]);
 }
 
++ (void) logPiece:(Square*)square :(Piece*)piece{
+	NSLog(@"%@: %@%@", [piece display], [GlobalFunctions columnEnumToString:square.column], [GlobalFunctions rowEnumToString:square.row]);
+}
+
 
 @end

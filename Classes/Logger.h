@@ -17,5 +17,6 @@
 + (void) logMoves:(NSArray *)moves;
 + (void) logMoves:(NSArray*)moves :(Piece*)piece;
 + (void) logSquare:(Square*)square;
++ (void) logPiece:(Square*)square :(Piece*)piece;
 
 @end

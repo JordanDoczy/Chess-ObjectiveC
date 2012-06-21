@@ -14,6 +14,6 @@
 
 }
 
-+ (NSMutableArray*) getPossibleMoves:(Board *)board;
++ (NSMutableArray*) getPossibleMoves:(Board *)board :(Piece *)piece;
 
 @end

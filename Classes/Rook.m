@@ -32,13 +32,13 @@
 
 - (NSMutableArray*) getPossibleMoves:(Board *)board{
 	
-	return [Rook getPossibleMoves:board];
+	return [Rook getPossibleMoves:board :self];
 }
 
-+ (NSMutableArray*) getPossibleMoves:(Board *)board{
++ (NSMutableArray*) getPossibleMoves:(Board *)board :(Piece *)piece{
 	
 	NSMutableArray *squares = [[NSMutableArray alloc] init];
-	Square *square = [board getSquare:self];
+	Square *square = [board getSquare:piece];
 
 	int r = square.row;
 	int c = square.column;

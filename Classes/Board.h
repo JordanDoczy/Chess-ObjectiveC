@@ -27,9 +27,9 @@
 - (id) getKing:(ColorEnum)color;
 - (id) getPositionOfKing:(ColorEnum)color;
 + (int) getRow:(int)index;
-- (NSArray *) getPieces:(ColumnEnum)color;
+- (NSArray *) getPieces:(ColorEnum)color;
 - (NSArray *) getPieces;
-- (NSArray *) getPossibleMoves:(ColumnEnum)color;
+- (NSArray *) getPossibleMoves:(ColorEnum)color;
 - (id) getSquare:(Piece*)piece;
 
 - (id) init;

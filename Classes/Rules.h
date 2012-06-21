@@ -23,5 +23,6 @@
 - (BOOL) isCorrectColor:(ColorEnum)color;
 - (BOOL) isToEmpty:(Move *)move;
 - (BOOL) isValidMove:(Move *)move;
+- (BOOL) isKingInCheck:(Move *)move;
 
 @end

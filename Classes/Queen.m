@@ -37,8 +37,8 @@
 
 - (NSMutableArray*) getPossibleMoves:(Board *)board{
 	
-	NSMutableArray *squares = [Rook getPossibleMoves:board];
-	[squares addObjectsFromArray:[Bishop getPossibleMoves:board]];
+	NSMutableArray *squares = [Rook getPossibleMoves:board :self];
+	[squares addObjectsFromArray:[Bishop getPossibleMoves:board :self]];
 	
 	return squares;
 }

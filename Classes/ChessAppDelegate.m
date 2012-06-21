@@ -42,6 +42,14 @@ BoardView *view;
 	[[NSNotificationCenter defaultCenter] addObserver:controller selector:@selector(mouseUpEventHandler:) name:[GlobalEvents MOUSEUP_EVENT] object:view ];
 
 	[controller reset];
+	
+	//Board *board = model.currentMove;
+	//NSArray *blackPieces = [board getPieces:Black];
+	
+	//for (Piece *p in blackPieces){
+	//	[Logger logPiece:[board getSquare:p] :p];
+	//}
+	
 
 	[window makeKeyAndVisible];
 	[window addSubview:view];

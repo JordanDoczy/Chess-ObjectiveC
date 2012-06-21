@@ -15,6 +15,8 @@
 #import "Piece.h"
 #import "RowEnum.h"
 
+#import "Logger.h"
+
 
 @implementation Board
 
@@ -62,7 +64,7 @@
 - (id) getItemAtSquare:(int)column :(int)row{
 	return [self getItemAtSquare:[Board getIndex:column :row]];
 }
-- (NSArray *) getPieces:(ColumnEnum)color{
+- (NSArray *) getPieces:(ColorEnum)color{
 	NSPredicate *pred = [NSPredicate predicateWithFormat:@"color == %i", color];
 	return [squares filteredArrayUsingPredicate:pred];
 }
@@ -72,13 +74,17 @@
 	[pieces addObjectsFromArray: [self getPieces:Black]];
 	return pieces;
 }
-- (NSArray *) getPossibleMoves:(ColumnEnum)color{
+- (NSArray *) getPossibleMoves:(ColorEnum)color{
 	NSMutableArray *moves = [[NSMutableArray alloc] init];
+	
 	Square *square;
-	for (Piece *piece in [self getPieces:color]){
+	NSArray *pieces = [self getPieces:color];
+	
+	for (Piece *piece in pieces){
 		square = [self getSquare:piece];
 		[moves addObjectsFromArray: [piece getPossibleMoves :self]];
 	}
+	
 	return moves;
 }
 - (id) getSquare:(Piece*)piece{
