@@ -51,6 +51,18 @@
 	
 	return 0;
 }
+
+- (id) getPiece:(ColorEnum)color :(NSString*)name{
+	NSPredicate *pred = [NSPredicate predicateWithFormat:@"name == %@", name];
+	NSArray *a = [squares filteredArrayUsingPredicate:pred];
+	
+	for (Piece *p in a){
+		if(p.color == color) return p;
+	}
+	
+	return 0;
+}
+
 - (id) getPositionOfKing:(ColorEnum)color{
 	Piece *king = [self getKing:color];
 	return [self getSquare:king];
@@ -114,13 +126,13 @@
 	int start = includeFromSquare ? 0 : 1;
 	int end = includeToSquare ? 0 : 1;
 	
-	if(move.fromSquare.row < move.toSquare.row){
-		for (i=move.fromSquare.row+start; i<=move.toSquare.row-end; i++) {
+	if(move.fromSquare.column < move.toSquare.column){
+		for (i=move.fromSquare.column+start; i<=move.toSquare.column-end; i++) {
 			if (![self isSquareEmpty:i :move.fromSquare.row]) return false;
 		}
 	}
 	else{
-		for (i=move.toSquare.row+end; i<=move.fromSquare.row-start; i++) {
+		for (i=move.toSquare.column+end; i<=move.fromSquare.column-start; i++) {
 			if (![self isSquareEmpty:i :move.fromSquare.row]) return false;
 		}
 	}

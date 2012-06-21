@@ -43,20 +43,39 @@ BoardView *view;
 
 	[controller reset];
 	
-	//Board *board = model.currentMove;
-	//NSArray *blackPieces = [board getPieces:Black];
 	
-	//for (Piece *p in blackPieces){
-	//	[Logger logPiece:[board getSquare:p] :p];
-	//}
+	UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+	[button addTarget:self action:@selector(buttonClicked:)forControlEvents:UIControlEventTouchDown];
+	[button setTitle:@"Log" forState:UIControlStateNormal];
+	button.frame = CGRectMake(100.0, 410.0, 120.0, 50.0);
+	[window addSubview:button];
 	
-
+	
 	[window makeKeyAndVisible];
 	[window addSubview:view];
 	[view release];
 	
 	
     return YES;
+}
+
+- (void)buttonClicked:(UIButton*)button
+{
+	
+	Board *board = model.currentMove;
+	Piece *piece = [board getPiece :Black :@"Queen"];
+	Square *square = [board getSquare:piece];
+	
+	[Logger logPiece:square :piece];
+			 
+	NSArray *moves = [piece getPossibleMoves:board];
+	for (Move *move in moves){
+		if([piece isValidMove:move :board :false]){
+			[Logger logMove:move];
+		}
+	}
+	//[Logger logMoves:moves :piece];
+	
 }
 
 - (void) test{

@@ -26,7 +26,8 @@ int _currentIndex=0;
 	self.currentIndex = [moves count]-1;
 }
 - (Board*) currentMove{
-	return [[moves objectAtIndex:_currentIndex] copy];
+	//return [[moves objectAtIndex:_currentIndex] copy];
+	return [moves objectAtIndex:_currentIndex];
 }
 
 - (int) currentIndex{

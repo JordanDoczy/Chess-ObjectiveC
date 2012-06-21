@@ -27,9 +27,8 @@ History *model;
 }
 
 - (BOOL) isValidMove:(Move *)move{
-	Board *board = [model currentMove];
 
-	Piece *from = [board getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
+	Piece *from = [[model currentMove] getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
 	
 	if(![self isCorrectColor :from.color]) return false;
 	
@@ -37,7 +36,7 @@ History *model;
 	BOOL captureAttempt = [self isCaptureAttempt:move];
 	
 	if(!toSquareEmpty && !captureAttempt) return false;
-	if(![from isValidMove:move :board :captureAttempt]) return false;
+	if(![from isValidMove:move :[model currentMove] :captureAttempt]) return false;
 	if([self isKingInCheck:move]) return false;
 
 	return true;
@@ -48,9 +47,8 @@ History *model;
 }
 
 - (BOOL) isCaptureAttempt:(Move *)move{
-	Board *board = [model currentMove];
-	Piece *from = [board getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
-	Piece *to = [board getItemAtSquare:move.toSquare.column :move.toSquare.row];
+	Piece *from = [[model currentMove] getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
+	Piece *to = [[model currentMove] getItemAtSquare:move.toSquare.column :move.toSquare.row];
 	
 	if([from isKindOfClass:[NullPiece class]]) return false;
 	if([to isKindOfClass:[NullPiece class]]) return false;
@@ -67,7 +65,7 @@ History *model;
 - (BOOL) isKingInCheck:(Move *)move{
 	
 	
-	Board *board = [model currentMove];
+	Board *board = [model.currentMove copy];
 	Piece *from = [board getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
 	[board clearSquare:move.fromSquare.column :move.fromSquare.row];
 	[board setSquare:move.toSquare.column :move.toSquare.row :from];
@@ -79,9 +77,7 @@ History *model;
 	else color = White;
 	
 	NSArray *opposingMoves = [board getPossibleMoves:color];
-	
-	[Logger logMoves:opposingMoves];
-	
+		
 	Piece *piece;
 	for (Move *move in opposingMoves){
 		if(move.toSquare.row == kingPosition.row && move.toSquare.column == kingPosition.column){
@@ -90,6 +86,11 @@ History *model;
 		}
 		
 	}
+	
+	[board release];
+	[from release];
+	[kingPosition release];
+	[opposingMoves release];
 	
 	return false;
 }

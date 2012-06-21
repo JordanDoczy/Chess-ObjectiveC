@@ -40,7 +40,7 @@ Move *move;
 	return [self init];
 }
 - (void) movePiece:(Move *)move{
-	Board *board = model.currentMove;
+	Board *board = [model.currentMove copy];
 	Piece *currentPiece = [board getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
 
 	if ([rules isValidMove:move]){
@@ -52,6 +52,10 @@ Move *move;
 	else{
 		[model refresh];
 	}
+	
+	[board release];
+	[currentPiece release];
+	
 }
 - (void)reset{
 	[move reset];
