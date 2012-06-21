@@ -43,10 +43,6 @@ BoardView *view;
 
 	[controller reset];
 
-	[Logger logMoves:[model.currentMove getPossibleMoves:White]];
-	
-	
-	
 	[window makeKeyAndVisible];
 	[window addSubview:view];
 	[view release];

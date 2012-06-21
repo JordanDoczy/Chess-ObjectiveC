@@ -38,6 +38,21 @@
 + (int) getIndex:(int)column :(int)row{
 	return (row*[Constants ROWS]) + column;
 }
+
+- (id) getKing:(ColorEnum)color{
+	NSPredicate *pred = [NSPredicate predicateWithFormat:@"name == %@", @"King"];
+	NSArray *a = [squares filteredArrayUsingPredicate:pred];
+	
+	for (Piece *p in a){
+		if(p.color == color) return p;
+	}
+	
+	return 0;
+}
+- (id) getPositionOfKing:(ColorEnum)color{
+	Piece *king = [self getKing:color];
+	return [self getSquare:king];
+}
 + (int) getRow:(int)index{
 	return floor(index/[Constants ROWS]);
 }

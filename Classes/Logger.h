@@ -13,8 +13,9 @@
 @interface Logger : NSObject {
 }
 
++ (void) logMove:(Move*)move;
 + (void) logMoves:(NSArray *)moves;
 + (void) logMoves:(NSArray*)moves :(Piece*)piece;
-
++ (void) logSquare:(Square*)square;
 
 @end

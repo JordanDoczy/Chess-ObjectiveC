@@ -14,23 +14,23 @@
 @implementation Logger
 
 + (void) logMoves:(NSArray*)moves{
-	NSString *column;
-	NSString *row;
 	for (Move *move in moves) {
-		column = [GlobalFunctions columnEnumToString:move.toSquare.column];
-		row = [GlobalFunctions rowEnumToString:move.toSquare.row];
-		NSLog(@"move: %@%@", column, row);
+		[Logger logMove: move];
 	}
 }
 
 + (void) logMoves:(NSArray*)moves :(Piece*)piece{
-	NSString *column;
-	NSString *row;
 	for (Move *move in moves) {
-		column = [GlobalFunctions columnEnumToString:move.toSquare.column];
-		row = [GlobalFunctions rowEnumToString:move.toSquare.row];
 		NSLog(@"piece: %@ %@%@->%@%@", [piece display], [GlobalFunctions columnEnumToString:move.fromSquare.column], [GlobalFunctions rowEnumToString:move.fromSquare.row], [GlobalFunctions columnEnumToString:move.toSquare.column], [GlobalFunctions rowEnumToString:move.toSquare.row]);
 	}
+}
+
++ (void) logMove:(Move*)move{
+	NSLog(@"%@%@->%@%@", [GlobalFunctions columnEnumToString:move.fromSquare.column], [GlobalFunctions rowEnumToString:move.fromSquare.row], [GlobalFunctions columnEnumToString:move.toSquare.column], [GlobalFunctions rowEnumToString:move.toSquare.row]);
+}
+
++ (void) logSquare:(Square*)square{
+	NSLog(@"%@%@", [GlobalFunctions columnEnumToString:square.column], [GlobalFunctions rowEnumToString:square.row]);
 }
 
 

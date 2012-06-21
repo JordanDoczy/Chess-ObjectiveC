@@ -24,6 +24,8 @@
 + (int) getIndex:(int)column :(int)row;
 - (id) getItemAtSquare:(int)index;
 - (id) getItemAtSquare:(int)column :(int)row;
+- (id) getKing:(ColorEnum)color;
+- (id) getPositionOfKing:(ColorEnum)color;
 + (int) getRow:(int)index;
 - (NSArray *) getPieces:(ColumnEnum)color;
 - (NSArray *) getPieces;
