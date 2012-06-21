@@ -29,7 +29,11 @@
 }
 
 - (NSMutableArray*) getPossibleMoves:(Board *)board :(ColumnEnum)column :(RowEnum)row{
-	
+	return [Bishop getPossibleMoves :board :column :row];
+}
+
++ (NSMutableArray*) getPossibleMoves:(Board *)board :(ColumnEnum)column :(RowEnum)row{
+
 	NSMutableArray *squares = [[NSMutableArray alloc] init];
 	
 	int r = row;
@@ -40,7 +44,7 @@
 		c++;
 		[squares addObject:[[Move alloc] init :column :row :c :r]]; 
 	}
-
+	
 	r = row;
 	c = column;
 	
@@ -58,7 +62,7 @@
 		c--;
 		[squares addObject:[[Move alloc] init :column :row :c :r]]; 
 	}
-
+	
 	r = row;
 	c = column;
 	
@@ -70,6 +74,5 @@
 	
 	return squares;
 }
-
 
 @end

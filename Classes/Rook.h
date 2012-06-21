@@ -14,4 +14,6 @@
 
 }
 
++ (NSMutableArray*) getPossibleMoves:(Board *)board :(ColumnEnum)column :(RowEnum)row;
+
 @end

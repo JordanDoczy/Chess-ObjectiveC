@@ -9,6 +9,8 @@
 #import "Board.h"
 #import "Move.h"
 #import "Queen.h"
+#import "Rook.h"
+#import "Bishop.h"
 
 @implementation Queen
 
@@ -33,5 +35,14 @@
 	
 	return false;
 }
+
+- (NSMutableArray*) getPossibleMoves:(Board *)board :(ColumnEnum)column :(RowEnum)row{
+	
+	NSMutableArray *moves = [Rook getPossibleMoves:board :column :row];
+	[moves addObjectsFromArray:[Bishop getPossibleMoves:board :column :row]];
+	
+	return moves;
+}
+
 
 @end

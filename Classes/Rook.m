@@ -33,6 +33,11 @@
 
 - (NSMutableArray*) getPossibleMoves:(Board *)board :(ColumnEnum)column :(RowEnum)row{
 	
+	return [Rook getPossibleMoves:board :column :row];
+}
+
++ (NSMutableArray*) getPossibleMoves:(Board *)board :(ColumnEnum)column :(RowEnum)row{
+	
 	NSMutableArray *squares = [[NSMutableArray alloc] init];
 	
 	int r = row;
