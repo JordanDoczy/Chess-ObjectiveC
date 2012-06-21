@@ -123,6 +123,24 @@ Move *move;
 	[self movePiece:move];
 }
 
-
+/*
+private bool inCheck(Colors color)
+{
+	return false;
+	
+	King king = model.GetKing(color);
+	List<Piece> pieces = model.GetOppositeColorPieces(color);
+	
+	foreach (Piece piece in pieces)
+	{
+		if (testMove(piece.Square, king.Square))
+		{
+			return true;
+		}
+	}
+	
+	return false;
+}
+*/
 
 @end

@@ -45,6 +45,9 @@
 	return true;
 }
 
-
+- (NSMutableArray*) getPossibleMoves:(Board *)board :(ColumnEnum)column :(RowEnum)row{
+	NSMutableArray *squares = [[NSMutableArray alloc] init];
+	return squares;
+}
 
 @end

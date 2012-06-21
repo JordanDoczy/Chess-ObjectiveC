@@ -37,6 +37,7 @@
 - (BOOL) isSquareEmpty:(ColumnEnum)column :(RowEnum)row;
 
 - (NSArray *) getPieces:(ColumnEnum)color;
+- (NSArray *) getPieces;
 
 
 @property (nonatomic, retain) NSMutableArray *squares;

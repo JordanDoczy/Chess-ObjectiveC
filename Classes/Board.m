@@ -163,7 +163,12 @@
 	NSPredicate *pred = [NSPredicate predicateWithFormat:@"color == %i", color];
 	return [squares filteredArrayUsingPredicate:pred];
 }
-
+- (NSArray *) getPieces{
+	NSMutableArray *pieces = [[NSMutableArray alloc] init];
+	[pieces addObjectsFromArray:[self getPieces:White]];
+	[pieces addObjectsFromArray: [self getPieces:Black]];
+	return pieces;
+}
 
 
 @end
