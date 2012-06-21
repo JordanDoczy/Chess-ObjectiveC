@@ -48,16 +48,17 @@
 }
 
 
-- (NSMutableArray*) getPossibleMoves:(Board *)board :(ColumnEnum)column :(RowEnum)row{
+- (NSMutableArray*) getPossibleMoves:(Board *)board{
 	
 	NSMutableArray *squares = [[NSMutableArray alloc] init];
-	
+	Square *square = [board getSquare:self];
+
 	int direction = color==White ? 1 : -1;
 	
-	if(row+direction >= One && row+direction<=Eight) [squares addObject:[[Move alloc] init :column :row :column :row+direction]]; 
-	if(!moved) [squares addObject:[[Move alloc] init :column :row :column :row+(2*direction)]]; 
-	if((int)(column+1) <= H) [squares addObject:[[Move alloc] init :column :row :column+1 :row+direction]]; 
-	if((int)(column-1) >= A) [squares addObject:[[Move alloc] init :column :row :column-1 :row+direction]]; 
+	if(square.row+direction >= One && square.row+direction<=Eight) [squares addObject:[[Move alloc] init :square.column :square.row :square.column :square.row+direction]]; 
+	if(!moved) [squares addObject:[[Move alloc] init :square.column :square.row :square.column :square.row+(2*direction)]]; 
+	if((int)(square.column+1) <= H) [squares addObject:[[Move alloc] init :square.column :square.row :square.column+1 :square.row+direction]]; 
+	if((int)(square.column-1) >= A) [squares addObject:[[Move alloc] init :square.column :square.row :square.column-1 :square.row+direction]]; 
 	
 	return squares;
 }

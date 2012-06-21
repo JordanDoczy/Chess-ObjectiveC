@@ -13,7 +13,7 @@
 
 @implementation Logger
 
-+ (void) logMoves:(NSMutableArray*)moves{
++ (void) logMoves:(NSArray*)moves{
 	NSString *column;
 	NSString *row;
 	for (Move *move in moves) {
@@ -23,7 +23,7 @@
 	}
 }
 
-+ (void) logMoves:(NSMutableArray*)moves :(Piece*)piece{
++ (void) logMoves:(NSArray*)moves :(Piece*)piece{
 	NSString *column;
 	NSString *row;
 	for (Move *move in moves) {

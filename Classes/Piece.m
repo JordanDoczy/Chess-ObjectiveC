@@ -11,6 +11,7 @@
 #import "Move.h"
 #import "NullPiece.h"
 #import "Piece.h"
+#import "Square.h"
 
 @implementation Piece
 
@@ -45,7 +46,7 @@
 	return true;
 }
 
-- (NSMutableArray*) getPossibleMoves:(Board *)board :(ColumnEnum)column :(RowEnum)row{
+- (NSMutableArray*) getPossibleMoves:(Board *)board{
 	NSMutableArray *squares = [[NSMutableArray alloc] init];
 	return squares;
 }

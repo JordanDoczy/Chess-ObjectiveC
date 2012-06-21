@@ -43,11 +43,8 @@ BoardView *view;
 
 	[controller reset];
 
-	Piece *piece;
-	for (int i=0; i<[model.currentMove.squares count]; i++) {
-		piece = [model.currentMove getSquare:i];
-		[Logger logMoves:[piece getPossibleMoves :model.currentMove :[Board getColumn:i] :[Board getRow:i]] :piece];
-	}
+	[Logger logMoves:[model.currentMove getPossibleMoves:White]];
+	
 	
 	
 	[window makeKeyAndVisible];

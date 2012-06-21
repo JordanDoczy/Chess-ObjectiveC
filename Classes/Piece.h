@@ -8,11 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "ColorEnum.h"
-#import "ColumnEnum.h"
-#import "RowEnum.h"
 
 @class Move;
 @class Board;
+@class Square;
 
 @interface Piece : NSObject {
 	ColorEnum color;
@@ -29,7 +28,7 @@
 - (NSString*)display;
 - (id) init:(ColorEnum)_color;
 - (BOOL) isValidMove:(Move *)move :(Board *)board :(BOOL)isCapture;
-- (NSMutableArray*) getPossibleMoves:(Board *)board :(ColumnEnum)column :(RowEnum)row;
+- (NSMutableArray*) getPossibleMoves:(Board *)board;
 
 
 @end

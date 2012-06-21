@@ -41,7 +41,7 @@ Move *move;
 }
 - (void) movePiece:(Move *)move{
 	Board *board = model.currentMove;
-	Piece *currentPiece = [board getSquare:move.fromSquare.column :move.fromSquare.row];
+	Piece *currentPiece = [board getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
 
 	if ([rules isValidMove:move]){
 		[board clearSquare:move.fromSquare.column :move.fromSquare.row];

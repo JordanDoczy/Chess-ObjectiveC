@@ -35,10 +35,10 @@
 	return false;
 }
 
-- (NSMutableArray*) getPossibleMoves:(Board *)board :(ColumnEnum)column :(RowEnum)row{
+- (NSMutableArray*) getPossibleMoves:(Board *)board{
 	
-	NSMutableArray *squares = [Rook getPossibleMoves:board :column :row];
-	[squares addObjectsFromArray:[Bishop getPossibleMoves:board :column :row]];
+	NSMutableArray *squares = [Rook getPossibleMoves:board];
+	[squares addObjectsFromArray:[Bishop getPossibleMoves:board]];
 	
 	return squares;
 }

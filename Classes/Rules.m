@@ -26,7 +26,7 @@ History *model;
 }
 
 - (BOOL) isValidMove:(Move *)move{
-	Piece *from = [[model currentMove] getSquare:move.fromSquare.column :move.fromSquare.row];
+	Piece *from = [[model currentMove] getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
 	
 	if(![self isCorrectColor :from.color]) return false;
 	
@@ -44,8 +44,8 @@ History *model;
 }
 
 - (BOOL) isCaptureAttempt:(Move *)move{
-	Piece *from = [[model currentMove] getSquare:move.fromSquare.column :move.fromSquare.row];
-	Piece *to = [[model currentMove] getSquare:move.toSquare.column :move.toSquare.row];
+	Piece *from = [[model currentMove] getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
+	Piece *to = [[model currentMove] getItemAtSquare:move.toSquare.column :move.toSquare.row];
 	
 	if([from isKindOfClass:[NullPiece class]]) return false;
 	if([to isKindOfClass:[NullPiece class]]) return false;
@@ -55,7 +55,7 @@ History *model;
 }
 
 - (BOOL) isToEmpty:(Move *)move{
-	Piece *to = [[model currentMove] getSquare:move.toSquare.column :move.toSquare.row];
+	Piece *to = [[model currentMove] getItemAtSquare:move.toSquare.column :move.toSquare.row];
 	return [to isKindOfClass:[NullPiece class]];
 }
 

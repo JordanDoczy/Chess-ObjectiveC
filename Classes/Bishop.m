@@ -28,48 +28,49 @@
 	return false;
 }
 
-- (NSMutableArray*) getPossibleMoves:(Board *)board :(ColumnEnum)column :(RowEnum)row{
-	return [Bishop getPossibleMoves :board :column :row];
+- (NSMutableArray*) getPossibleMoves:(Board *)board{
+	return [Bishop getPossibleMoves :board];
 }
 
-+ (NSMutableArray*) getPossibleMoves:(Board *)board :(ColumnEnum)column :(RowEnum)row{
++ (NSMutableArray*) getPossibleMoves:(Board *)board{
 
 	NSMutableArray *squares = [[NSMutableArray alloc] init];
-	
-	int r = row;
-	int c = column;
+	Square *square = [board getSquare:self];
+
+	int r = square.row;
+	int c = square.column;
 	
 	while(r < Eight && c < H){
 		r++;
 		c++;
-		[squares addObject:[[Move alloc] init :column :row :c :r]]; 
+		[squares addObject:[[Move alloc] init :square.column :square.row :c :r]]; 
 	}
 	
-	r = row;
-	c = column;
+	r = square.row;
+	c = square.column;
 	
 	while(r < Eight && c > A){
 		r++;
 		c--;
-		[squares addObject:[[Move alloc] init :column :row :c :r]]; 
+		[squares addObject:[[Move alloc] init :square.column :square.row :c :r]]; 
 	}
 	
-	r = row;
-	c = column;
+	r = square.row;
+	c = square.column;
 	
 	while(r > One && c > A){
 		r--;
 		c--;
-		[squares addObject:[[Move alloc] init :column :row :c :r]]; 
+		[squares addObject:[[Move alloc] init :square.column :square.row :c :r]]; 
 	}
 	
-	r = row;
-	c = column;
+	r = square.row;
+	c = square.column;
 	
 	while(r > One && c < H){
 		r--;
 		c++;
-		[squares addObject:[[Move alloc] init :column :row :c :r]]; 
+		[squares addObject:[[Move alloc] init :square.column :square.row :c :r]]; 
 	}
 	
 	return squares;

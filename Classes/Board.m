@@ -26,6 +26,12 @@
 - (void) clearSquare:(int)column :(int)row{
 	[self clearSquare:[Board getIndex:column :row]];
 }
+- (id) copyWithZone:(NSZone *)zone{
+    Board *copy = [[[self class] allocWithZone: zone] init];
+	copy.squares = [[NSMutableArray alloc] initWithArray:squares copyItems:NO];
+	return copy;
+}
+
 + (int) getColumn:(int)index{
 	return index%[Constants COLUMNS];
 }
@@ -35,18 +41,37 @@
 + (int) getRow:(int)index{
 	return floor(index/[Constants ROWS]);
 }
-- (id) getSquare:(int)index{
+- (id) getItemAtSquare:(int)index{
 	return [squares objectAtIndex:index];
 }
-- (id) getSquare:(int)column :(int)row{
-	return [self getSquare:[Board getIndex:column :row]];
+- (id) getItemAtSquare:(int)column :(int)row{
+	return [self getItemAtSquare:[Board getIndex:column :row]];
 }
-- (void) setSquare:(int)index :(Piece*)piece{
-	[squares replaceObjectAtIndex:index withObject:piece];
+- (NSArray *) getPieces:(ColumnEnum)color{
+	NSPredicate *pred = [NSPredicate predicateWithFormat:@"color == %i", color];
+	return [squares filteredArrayUsingPredicate:pred];
 }
-- (void) setSquare:(int)column :(int)row :(Piece*)piece{
-	[self setSquare:[Board getIndex:column :row] :piece];
+- (NSArray *) getPieces{
+	NSMutableArray *pieces = [[NSMutableArray alloc] init];
+	[pieces addObjectsFromArray:[self getPieces:White]];
+	[pieces addObjectsFromArray: [self getPieces:Black]];
+	return pieces;
 }
+- (NSArray *) getPossibleMoves:(ColumnEnum)color{
+	NSMutableArray *moves = [[NSMutableArray alloc] init];
+	Square *square;
+	for (Piece *piece in [self getPieces:color]){
+		square = [self getSquare:piece];
+		[moves addObjectsFromArray: [piece getPossibleMoves :self]];
+	}
+	return moves;
+}
+- (id) getSquare:(Piece*)piece{
+	int index = [squares indexOfObject:piece];
+	if(index != NSNotFound) return [[Square alloc] init: [Board getColumn:index] :[Board getRow:index]];
+	return 0;
+}
+
 - (id) init{
 	squares = [[NSMutableArray alloc] initWithCapacity:[Constants COLUMNS]*[Constants ROWS]];
 	[self initSquares];
@@ -59,16 +84,9 @@
 	}
 }
 
-- (id) copyWithZone:(NSZone *)zone{
-    Board *copy = [[[self class] allocWithZone: zone] init];
-	copy.squares = [[NSMutableArray alloc] initWithArray:squares copyItems:NO];
-	return copy;
-}
-
 - (BOOL) isAdjacentColumn:(Move *)move{
 	return abs(move.fromSquare.column - move.toSquare.column) == 1;
 }
-
 - (BOOL) isColumnRangeEmpty:(Move *)move :(BOOL)includeFromSquare :(BOOL)includeToSquare{	
 
 	int i;
@@ -88,11 +106,9 @@
 	
 	return true;
 }
-
 - (BOOL) isDiagonal:(Move *) move{
 	return abs(move.fromSquare.column - move.toSquare.column) == abs(move.fromSquare.row - move.toSquare.row);
 }
-
 - (BOOL) isDiagonalRangeEmpty:(Move *) move :(BOOL)includeFromSquare :(BOOL)includeToSquare{	
 	
 	int start = includeFromSquare ? 0 : 1;
@@ -132,7 +148,6 @@
 	
 	return true;
 }
-
 - (BOOL) isRowRangeEmpty:(Move *)move :(BOOL)includeFromSquare :(BOOL)includeToSquare{	
 	
 	int i;
@@ -152,21 +167,15 @@
 	
 	return true;
 }
-
-
 - (BOOL) isSquareEmpty:(ColumnEnum)column :(RowEnum)row{
-	return [[self getSquare:column :row] isKindOfClass:[NullPiece class]];
+	return [[self getItemAtSquare:column :row] isKindOfClass:[NullPiece class]];
 }
 
-- (NSArray *) getPieces:(ColumnEnum)color{
-	NSPredicate *pred = [NSPredicate predicateWithFormat:@"color == %i", color];
-	return [squares filteredArrayUsingPredicate:pred];
+- (void) setSquare:(int)index :(Piece*)piece{
+	[squares replaceObjectAtIndex:index withObject:piece];
 }
-- (NSArray *) getPieces{
-	NSMutableArray *pieces = [[NSMutableArray alloc] init];
-	[pieces addObjectsFromArray:[self getPieces:White]];
-	[pieces addObjectsFromArray: [self getPieces:Black]];
-	return pieces;
+- (void) setSquare:(int)column :(int)row :(Piece*)piece{
+	[self setSquare:[Board getIndex:column :row] :piece];
 }
 
 

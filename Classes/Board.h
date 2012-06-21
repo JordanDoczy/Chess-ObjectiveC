@@ -19,16 +19,19 @@
 - (void) clearSquare:(int)index;
 - (void) clearSquare:(int)column :(int)row;
 - (id) copyWithZone:(NSZone *)zone;
+
 + (int) getColumn:(int)index;
 + (int) getIndex:(int)column :(int)row;
+- (id) getItemAtSquare:(int)index;
+- (id) getItemAtSquare:(int)column :(int)row;
 + (int) getRow:(int)index;
-- (id) getSquare:(int)index;
-- (id) getSquare:(int)column :(int)row;
+- (NSArray *) getPieces:(ColumnEnum)color;
+- (NSArray *) getPieces;
+- (NSArray *) getPossibleMoves:(ColumnEnum)color;
+- (id) getSquare:(Piece*)piece;
+
 - (id) init;
 - (void) initSquares;
-- (void) setSquare:(int)index :(Piece *)piece;
-- (void) setSquare:(int)column :(int)row :(Piece *)piece;
-
 - (BOOL) isAdjacentColumn:(Move *)move;
 - (BOOL) isColumnRangeEmpty:(Move *)move :(BOOL)includeFromSquare :(BOOL)includeToSquare;
 - (BOOL) isDiagonal:(Move *) move;
@@ -36,8 +39,8 @@
 - (BOOL) isRowRangeEmpty:(Move *)move :(BOOL)includeFromSquare :(BOOL)includeToSquare;
 - (BOOL) isSquareEmpty:(ColumnEnum)column :(RowEnum)row;
 
-- (NSArray *) getPieces:(ColumnEnum)color;
-- (NSArray *) getPieces;
+- (void) setSquare:(int)index :(Piece *)piece;
+- (void) setSquare:(int)column :(int)row :(Piece *)piece;
 
 
 @property (nonatomic, retain) NSMutableArray *squares;

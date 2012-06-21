@@ -31,28 +31,29 @@
 	return false;
 }
 
-- (NSMutableArray*) getPossibleMoves:(Board *)board :(ColumnEnum)column :(RowEnum)row{
+- (NSMutableArray*) getPossibleMoves:(Board *)board{
 	
 	NSMutableArray *squares = [[NSMutableArray alloc] init];
-	
-	if((int)(column-1) >= A){
-		if((int)(row-2) >= One) [squares addObject:[[Move alloc] init :column :row :column-1 :row-2]];
-		if((int)(row+2) <= Eight) [squares addObject:[[Move alloc] init :column :row :column-1 :row+2]];
+	Square *square = [board getSquare:self];
+
+	if((int)(square.column-1) >= A){
+		if((int)(square.row-2) >= One) [squares addObject:[[Move alloc] init :square.column :square.row :square.column-1 :square.row-2]];
+		if((int)(square.row+2) <= Eight) [squares addObject:[[Move alloc] init :square.column :square.row :square.column-1 :square.row+2]];
 	}
 	
-	if((int)(column-2) >= A){
-		if((int)(row-1) >= One) [squares addObject:[[Move alloc] init :column :row :column-2 :row-1]];
-		if((int)(row+1) <= Eight) [squares addObject:[[Move alloc] init :column :row :column-2 :row+1]];
+	if((int)(square.column-2) >= A){
+		if((int)(square.row-1) >= One) [squares addObject:[[Move alloc] init :square.column :square.row :square.column-2 :square.row-1]];
+		if((int)(square.row+1) <= Eight) [squares addObject:[[Move alloc] init :square.column :square.row :square.column-2 :square.row+1]];
 	}
 	
-	if((int)(column+1) <= H){
-		if((int)(row-2) >= One) [squares addObject:[[Move alloc] init :column :row :column+1 :row-2]];
-		if((int)(row+2) <= Eight) [squares addObject:[[Move alloc] init :column :row :column+1 :row+2]];
+	if((int)(square.column+1) <= H){
+		if((int)(square.row-2) >= One) [squares addObject:[[Move alloc] init :square.column :square.row :square.column+1 :square.row-2]];
+		if((int)(square.row+2) <= Eight) [squares addObject:[[Move alloc] init :square.column :square.row :square.column+1 :square.row+2]];
 	}
 	
-	if((int)(column+2) <= H){
-		if((int)(row-1) >= One) [squares addObject:[[Move alloc] init :column :row :column+2 :row-1]];
-		if((int)(row+1) <= Eight) [squares addObject:[[Move alloc] init :column :row :column+2 :row+1]];
+	if((int)(square.column+2) <= H){
+		if((int)(square.row-1) >= One) [squares addObject:[[Move alloc] init :square.column :square.row :square.column+2 :square.row-1]];
+		if((int)(square.row+1) <= Eight) [squares addObject:[[Move alloc] init :square.column :square.row :square.column+2 :square.row+1]];
 	}
 	
 	return squares;

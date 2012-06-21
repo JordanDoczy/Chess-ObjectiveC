@@ -99,7 +99,7 @@ NSMutableArray *imageViews;
 	
 	for (column = 0; column < [Constants COLUMNS]; column++) {
 		for (row=0; row<[Constants ROWS]; row++) {
-			piece = [model.currentMove getSquare:column :row];
+			piece = [model.currentMove getItemAtSquare:column :row];
 			if(![piece isKindOfClass:[NullPiece class]]){
 				[self addPiece:piece :column :row];
 			}
