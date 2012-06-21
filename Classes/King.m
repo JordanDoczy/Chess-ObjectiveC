@@ -23,5 +23,32 @@
 	return abs(move.fromColumn - move.toColumn) <= 1 && abs(move.fromRow - move.toRow) <= 1;
 }
 
+- (NSMutableArray*) getPossibleMoves:(Board *)board :(ColumnEnum)column :(RowEnum)row{
+	
+	NSMutableArray *squares = [[NSMutableArray alloc] init];
+
+	
+	if (row > One){
+		[squares addObject:[[Move alloc] init :column :row :column :row-1]];
+	}
+	if (row < Eight){
+		[squares addObject:[[Move alloc] init :column :row :column :row+1]];
+	}
+	
+	if((int)(column + 1) <= H){
+		[squares addObject:[[Move alloc] init :column :row :column+1 :row]];
+		if(row > One) [squares addObject:[[Move alloc] init :column :row :column+1 :row-1]];
+		if(row < Eight) [squares addObject:[[Move alloc] init :column :row :column+1 :row+1]];
+	}
+	
+	if((int)(column - 1) >= A){
+		[squares addObject:[[Move alloc] init :column :row :column-1 :row]];
+		if(row > One) [squares addObject:[[Move alloc] init :column :row :column-1 :row-1]];
+		if(row < Eight) [squares addObject:[[Move alloc] init :column :row :column-1 :row+1]];
+	}
+
+	return squares;
+}
+
 
 @end
