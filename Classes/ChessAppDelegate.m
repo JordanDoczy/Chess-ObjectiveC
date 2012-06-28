@@ -33,6 +33,9 @@ BoardView *view;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
+	//TODO fix board.copy - it's not copying the pieces state
+	
+	
 	model = [[History alloc] init];
 	view = [[BoardView alloc] initWithModel:model];
 	controller = [[Controller alloc] initWithModel:model];
@@ -42,6 +45,7 @@ BoardView *view;
 	[[NSNotificationCenter defaultCenter] addObserver:controller selector:@selector(mouseUpEventHandler:) name:[GlobalEvents MOUSEUP_EVENT] object:view ];
 
 	[controller reset];
+	[self test];
 	
 	
 	UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -80,13 +84,13 @@ BoardView *view;
 
 - (void) test{
 	[controller movePiece:[[Move alloc] init:E :Two :E :Four]];
-	[controller undo];
-	[controller movePiece:[[Move alloc] init:D :Two :D :Four]];
 	[controller movePiece:[[Move alloc] init:E :Seven :E :Five]];
 	[controller movePiece:[[Move alloc] init:G :One :F :Three]];
-	[controller undo];
-	[controller undo];
-	[controller undo];
+	[controller movePiece:[[Move alloc] init:B :Eight :C :Six]];
+	[controller movePiece:[[Move alloc] init:F :One :B :Five]];
+	[controller movePiece:[[Move alloc] init:F :Eight :C :Five]];
+	[controller movePiece:[[Move alloc] init:H :One :G :One]];
+	
 }
 - (void)applicationWillResignActive:(UIApplication *)application {
     /*

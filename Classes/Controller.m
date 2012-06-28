@@ -31,6 +31,7 @@ History *model;
 Rules *rules;
 Move *move;
 
+
 - (id) init{
 	move = [[Move alloc] init];
 	return self;
@@ -40,45 +41,39 @@ Move *move;
 	rules = [[Rules alloc] initWithModel:history];
 	return [self init];
 }
-- (BOOL) isCastleAttempt:(Move *)move{
-	Board *board = [model.currentMove copy];
-	Piece *currentPiece = [board getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
-	BOOL value = false;
-	if([currentPiece isKindOfClass:[King class]]){
-		if(abs(move.fromSquare.column - move.toSquare.column) == 2){
-			value = true;
-		}
-	}
-	
-	[board release];
-	[currentPiece release];
-	return value;
+- (BOOL) isCastleAttempt:(Move *)move :(Board*)board :(Piece*)currentPiece{
+	return [currentPiece isKindOfClass:[King class]] && abs(move.fromSquare.column - move.toSquare.column) == 2;
 }
-
 - (void) movePiece:(Move *)move{
 	Board *board = [model.currentMove copy];
 	Piece *currentPiece = [board getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
 
 	if([rules isCorrectColor:currentPiece.color]){
-		if([self isCastleAttempt: move]){
-			if ([rules isValidCastle:move]){
+		if ([self isCastleAttempt: move :board :currentPiece]){
+			Piece *rook = [board getRookFromCastleAttempt:move :currentPiece];
+			
+			if([rules isValidCastle:move :board :currentPiece :rook]){
 				[board clearSquare:move.fromSquare.column :move.fromSquare.row];
 				[board setSquare:move.toSquare.column :move.toSquare.row :currentPiece];
 				currentPiece.moved = true;
+			
+				Move *rookMove = [board getRookMoveFromCastleAttempt:move :currentPiece];
+				[board clearSquare:rookMove.fromSquare.column :rookMove.fromSquare.row];
+				[board setSquare:rookMove.toSquare.column :rookMove.toSquare.row :rook];
+				rook.moved = true;
+			
 				[model addMove:board];
 			}
 		}
-		else if ([rules isValidMove:move]){
+		else if ([rules isValidMove:move :board :currentPiece]){
 			[board clearSquare:move.fromSquare.column :move.fromSquare.row];
 			[board setSquare:move.toSquare.column :move.toSquare.row :currentPiece];
 			currentPiece.moved = true;
 			[model addMove:board];
 		}
 	}
-	else{
-		[model refresh];
-	}
 	
+	[model refresh];
 	[board release];
 	[currentPiece release];
 	
@@ -140,7 +135,6 @@ Move *move;
 	
 	move.fromSquare = [[Square alloc] init :[GlobalFunctions getColumnFromTouch: touch] :[GlobalFunctions getRowFromTouch: touch]];
 }
-
 - (void) mouseUpEventHandler:(NSNotification *)notification{
 
 	NSDictionary *dict = [notification userInfo];

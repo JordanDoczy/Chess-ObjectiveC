@@ -30,7 +30,7 @@
 }
 - (id) copyWithZone:(NSZone *)zone{
     Board *copy = [[[self class] allocWithZone: zone] init];
-	copy.squares = [[NSMutableArray alloc] initWithArray:squares copyItems:NO];
+	copy.squares = [[NSMutableArray alloc] initWithArray:squares];
 	return copy;
 }
 
@@ -50,6 +50,16 @@
 	}
 	
 	return 0;
+}
+
+- (id) getRookFromCastleAttempt:(Move*)move :(Piece*)king{
+	return [self getItemAtSquare:move.toSquare.column == G ? H : C :king.color == White ? One: Eight];
+}
+- (id) getRookMoveFromCastleAttempt:(Move*)move :(Piece*)king{
+	Move *rookMove = [[Move alloc] init];
+	rookMove.fromSquare = [[Square alloc] init :move.toSquare.column == G ? H : C :king.color == White ? One: Eight];
+	rookMove.toSquare = [[Square alloc] init :move.toSquare.column == G ? F : D :move.toSquare.row];
+	return rookMove;
 }
 
 - (id) getPiece:(ColorEnum)color :(NSString*)name{

@@ -27,30 +27,15 @@ History *model;
 	model = history;
 	return [self init];
 }
-
 - (BOOL) isCorrectColor:(ColorEnum)color{
 	return model.currentIndex%2 == color;
 }
-
-- (BOOL) isValidMove:(Move *)move{
-
-	Piece *from = [[model currentMove] getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
-	
-	BOOL toSquareEmpty = [self isToEmpty:move];
-	BOOL captureAttempt = [self isCaptureAttempt:move];
-	
-	if(!toSquareEmpty && !captureAttempt) return false;
-	if(![from isValidMove:move :[model currentMove] :captureAttempt]) return false;
-	if([self isKingInCheck:move]) return false;
-	
-	return true;
-}
-
-
-
 - (BOOL) isCaptureAttempt:(Move *)move{
 	Piece *from = [[model currentMove] getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
-	Piece *to = [[model currentMove] getItemAtSquare:move.toSquare.column :move.toSquare.row];
+	return [self isCaptureAttempt :move :model.currentMove :from];
+}
+- (BOOL) isCaptureAttempt:(Move *)move :(Board *)board :(Piece *)from{
+	Piece *to = [board getItemAtSquare:move.toSquare.column :move.toSquare.row];
 	
 	if([from isKindOfClass:[NullPiece class]]) return false;
 	if([to isKindOfClass:[NullPiece class]]) return false;
@@ -58,17 +43,16 @@ History *model;
 
 	return true;
 }
-
 - (BOOL) isToEmpty:(Move *)move{
-	Piece *to = [[model currentMove] getItemAtSquare:move.toSquare.column :move.toSquare.row];
+	Piece *to = [model.currentMove getItemAtSquare:move.toSquare.column :move.toSquare.row];
 	return [to isKindOfClass:[NullPiece class]];
 }
-
 - (BOOL) isKingInCheck:(Move *)move{
+	Piece *from = [[model currentMove] getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
+	return [self isKingInCheck:move :model.currentMove :from];
+}
+- (BOOL) isKingInCheck:(Move *)move :(Board*)board :(Piece*)from{
 	
-	
-	Board *board = [model.currentMove copy];
-	Piece *from = [board getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
 	[board clearSquare:move.fromSquare.column :move.fromSquare.row];
 	[board setSquare:move.toSquare.column :move.toSquare.row :from];
 
@@ -89,43 +73,44 @@ History *model;
 		
 	}
 	
-	[board release];
-	[from release];
 	[kingPosition release];
 	[opposingMoves release];
 	
 	return false;
 }
-
 - (BOOL) isValidCastle:(Move *)move{
-	
-	
 	Piece *king = [model.currentMove getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
+	return [self isValidCastle :move :model.currentMove :king];
+}
+- (BOOL) isValidCastle:(Move *)move :(Board*)board :(Piece*)king :(Piece*)rook{
+	if(king.moved) return false;
+	if(move.toSquare.column != G && move.toSquare.column != C) return false;
+	
+	Move *rookMove = [board getRookMoveFromCastleAttempt:move :king];
+	
+	return [rook isValidMove:rookMove :board :false];
+}
+- (BOOL) isValidCastle:(Move *)move :(Board*)board :(Piece*)king{
 	Rook *rook;
 	Move *rookMove = [[Move alloc] init];
-	ColumnEnum column;
-
+	
 	if(king.moved) return false;
+	if(move.toSquare.column != G && move.toSquare.column != C) return false;
 	
-	if(move.toSquare.column == G){
-		if(king.color == White) rookMove.fromSquare = [[Square alloc] init :H :One];
-		else rookMove.fromSquare = [[Square alloc] init :H :Eight];
-	}
-	else if(move.toSquare.column == C){
-		if(king.color == White) rookMove.fromSquare = [[Square alloc] init :A :One];
-		else rookMove.fromSquare = [[Square alloc] init :A :Eight];
-	}
-	else return false;
 	
-	rook = [model.currentMove getItemAtSquare:rookMove.fromSquare.column :rookMove.fromSquare.row];
-	if(rook.moved) return false;
 	
-	column = move.toSquare.column == G ? F : D;
-	rookMove.toSquare = [[Square alloc] init :column :move.toSquare.row];
+	//rookMove.fromSquare = [[Square alloc] init :move.toSquare.column == G ? H : C :king.color == White ? One: Eight];
 	
-	if([rook isValidMove:rookMove :model.currentMove :false]){
-		[[model currentMove] clearSquare:rookMove.fromSquare.column :rookMove.fromSquare.row];
-		[[model currentMove] setSquare:rookMove.toSquare.column :rookMove.toSquare.row :rook];
+	//rook = [board getItemAtSquare:rookMove.fromSquare.column :rookMove.fromSquare.row];
+	//if(rook.moved) return false;
+	
+	//rookMove.toSquare = [[Square alloc] init :move.toSquare.column == G ? F : D :move.toSquare.row];
+	
+	
+	
+	if([rook isValidMove:rookMove :board :false]){  // TODO move to controller
+		[board clearSquare:rookMove.fromSquare.column :rookMove.fromSquare.row];
+		[board setSquare:rookMove.toSquare.column :rookMove.toSquare.row :rook];
 		rook.moved = true;
 		return true;
 	}
@@ -133,6 +118,21 @@ History *model;
 	
 	return false;
 	
+}
+- (BOOL) isValidMove:(Move *)move{
+	Piece *from = [[model currentMove] getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
+	return [self isValidMove:move :model.currentMove :from];
+}
+- (BOOL) isValidMove:(Move *)move :(Board *)board :(Piece *)from{
+	
+	BOOL toSquareEmpty = [self isToEmpty:move];
+	BOOL captureAttempt = [self isCaptureAttempt:move :board :from];
+	
+	if(!toSquareEmpty && !captureAttempt) return false;
+	if(![from isValidMove:move :board :captureAttempt]) return false;
+	if([self isKingInCheck:move :board :from]) return false;
+	
+	return true;
 }
 
 

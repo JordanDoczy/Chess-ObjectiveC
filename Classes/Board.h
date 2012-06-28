@@ -25,6 +25,9 @@
 - (id) getItemAtSquare:(int)index;
 - (id) getItemAtSquare:(int)column :(int)row;
 - (id) getKing:(ColorEnum)color;
+- (id) getRookFromCastleAttempt:(Move*)move :(Piece*)king;
+- (id) getRookMoveFromCastleAttempt:(Move*)move :(Piece*)king;
+
 - (id) getPositionOfKing:(ColorEnum)color;
 + (int) getRow:(int)index;
 - (id) getPiece:(ColorEnum)color :(NSString*)name;

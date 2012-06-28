@@ -19,6 +19,7 @@ int _currentIndex=0;
 	if(self.currentIndex < [moves count] && [moves count] > 0){
 		int loc = self.currentIndex+1;
 		int len = [moves count]-self.currentIndex-1;
+
 		[moves removeObjectsInRange:NSMakeRange(loc,len)];
 	}
 	
@@ -26,7 +27,6 @@ int _currentIndex=0;
 	self.currentIndex = [moves count]-1;
 }
 - (Board*) currentMove{
-	//return [[moves objectAtIndex:_currentIndex] copy];
 	return [moves objectAtIndex:_currentIndex];
 }
 
