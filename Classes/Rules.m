@@ -51,24 +51,24 @@ History *model;
 	Piece *from = [[model currentMove] getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
 	return [self isKingInCheck:move :model.currentMove :from];
 }
-- (BOOL) isKingInCheck:(Move *)move :(Board*)board :(Piece*)from{
+- (BOOL) isKingInCheck:(Move *)move :(Board*)board :(Piece*)piece{
 	
 	[board clearSquare:move.fromSquare.column :move.fromSquare.row];
-	[board setSquare:move.toSquare.column :move.toSquare.row :from];
+	[board setSquare:move.toSquare.column :move.toSquare.row :piece];
 
-	Square *kingPosition = [board getPositionOfKing:from.color];
+	Square *kingPosition = [board getPositionOfKing:piece.color];
 	
 	ColorEnum color;
-	if(from.color == White) color = Black;
+	if(piece.color == White) color = Black;
 	else color = White;
 	
 	NSArray *opposingMoves = [board getPossibleMoves:color];
 		
-	Piece *piece;
+	Piece *p;
 	for (Move *move in opposingMoves){
 		if(move.toSquare.row == kingPosition.row && move.toSquare.column == kingPosition.column){
-			piece = [board getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
-			if([piece isValidMove:move :board :true]) return true;
+			p = [board getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
+			if([p isValidMove:move :board :true]) return true;
 		}
 		
 	}

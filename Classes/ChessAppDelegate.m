@@ -33,7 +33,7 @@ BoardView *view;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
-	//TODO fix board.copy - it's not copying the pieces state
+	//TODO - replace NSNotificationCenter
 	
 	
 	model = [[History alloc] init];
@@ -90,6 +90,8 @@ BoardView *view;
 	[controller movePiece:[[Move alloc] init:F :One :B :Five]];
 	[controller movePiece:[[Move alloc] init:F :Eight :C :Five]];
 	[controller movePiece:[[Move alloc] init:H :One :G :One]];
+	[controller undo];
+	[controller movePiece:[[Move alloc] init:E :One :G :One]];
 	
 }
 - (void)applicationWillResignActive:(UIApplication *)application {

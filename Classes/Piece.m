@@ -36,9 +36,9 @@
 }
 
 - (id) copyWithZone:(NSZone *)zone{
-    Piece *copy = [[[self class] allocWithZone: zone] init];
-	copy.color = color;
-	copy.name = name;
+    Piece *copy = [[[self class] allocWithZone: zone] init:self.color];
+	//copy.color = color;
+	//copy.name = name;
     return copy;
 }
 

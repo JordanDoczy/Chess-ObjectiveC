@@ -16,9 +16,9 @@
 
 
 - (id) init:(ColorEnum)_color{
-	
+
+	[super init :_color];
 	super.name = @"Queen";
-	[super init: _color];
 	return self;
 }
 

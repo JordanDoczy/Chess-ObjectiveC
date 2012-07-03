@@ -46,13 +46,14 @@ Move *move;
 }
 - (void) movePiece:(Move *)move{
 	Board *board = [model.currentMove copy];
-	Piece *currentPiece = [board getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
+	Piece *currentPiece = [[board getItemAtSquare:move.fromSquare.column :move.fromSquare.row] retain];
 
 	if([rules isCorrectColor:currentPiece.color]){
 		if ([self isCastleAttempt: move :board :currentPiece]){
-			Piece *rook = [board getRookFromCastleAttempt:move :currentPiece];
+			Piece *rook = [[board getRookFromCastleAttempt:move :currentPiece] retain];
 			
 			if([rules isValidCastle:move :board :currentPiece :rook]){
+				
 				[board clearSquare:move.fromSquare.column :move.fromSquare.row];
 				[board setSquare:move.toSquare.column :move.toSquare.row :currentPiece];
 				currentPiece.moved = true;
@@ -61,6 +62,7 @@ Move *move;
 				[board clearSquare:rookMove.fromSquare.column :rookMove.fromSquare.row];
 				[board setSquare:rookMove.toSquare.column :rookMove.toSquare.row :rook];
 				rook.moved = true;
+				[rook release];
 			
 				[model addMove:board];
 			}

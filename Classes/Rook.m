@@ -14,9 +14,9 @@
 @implementation Rook
 
 - (id) init:(ColorEnum)_color{
-	
+
+	[super init :_color];
 	super.name = @"Rook";
-	[super init: _color];
 	return self;
 	
 }

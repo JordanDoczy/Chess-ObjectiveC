@@ -14,7 +14,7 @@
 
 - (id) init {
 	
-	self.color = -1;
+	[super init :-1];
 	return self;
 }
 

@@ -30,7 +30,7 @@
 }
 - (id) copyWithZone:(NSZone *)zone{
     Board *copy = [[[self class] allocWithZone: zone] init];
-	copy.squares = [[NSMutableArray alloc] initWithArray:squares];
+	copy.squares = [[NSMutableArray alloc] initWithArray:squares copyItems:YES];
 	return copy;
 }
 
