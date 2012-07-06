@@ -41,15 +41,12 @@ Move *move;
 	rules = [[Rules alloc] initWithModel:history];
 	return [self init];
 }
-- (BOOL) isCastleAttempt:(Move *)move :(Board*)board :(Piece*)currentPiece{
-	return [currentPiece isKindOfClass:[King class]] && abs(move.fromSquare.column - move.toSquare.column) == 2;
-}
 - (void) movePiece:(Move *)move{
 	Board *board = [model.currentMove copy];
 	Piece *currentPiece = [[board getItemAtSquare:move.fromSquare.column :move.fromSquare.row] retain];
 
 	if([rules isCorrectColor:currentPiece.color]){
-		if ([self isCastleAttempt: move :board :currentPiece]){
+		if ([rules isCastleAttempt: move :board :currentPiece]){
 			Piece *rook = [[board getRookFromCastleAttempt:move :currentPiece] retain];
 			
 			if([rules isValidCastle:move :board :currentPiece :rook]){
@@ -80,10 +77,7 @@ Move *move;
 	[currentPiece release];
 	
 }
-- (void)reset{
-	[move reset];
-	[self setUpBoard];
-}
+
 - (void) setUpBoard{
 	
 	Board *board = [[Board alloc] init];
@@ -127,22 +121,33 @@ Move *move;
 	[model addMove:board];
 	
 }
+
+- (void)reset:(UIButton*)button{
+	[self reset];
+}
+- (void)reset{
+	[model reset];
+	[move reset];
+	[self setUpBoard];
+}
+- (void)redo:(UIButton*)button{
+	[self redo];
+}
+- (void) redo{ 
+	model.currentIndex++;
+}
+- (void)undo:(UIButton*)button{
+	[self undo];
+}
 - (void) undo{ 
 	model.currentIndex--;
 }
-- (void) mouseDownEventHandler:(NSNotification *)notification{
-	
-	NSDictionary *dict = [notification userInfo];
-	UITouch *touch = [dict objectForKey:[GlobalEvents MOUSEDOWN_EVENT_DATA]];
-	
-	move.fromSquare = [[Square alloc] init :[GlobalFunctions getColumnFromTouch: touch] :[GlobalFunctions getRowFromTouch: touch]];
-}
-- (void) mouseUpEventHandler:(NSNotification *)notification{
 
-	NSDictionary *dict = [notification userInfo];
-	UITouch *touch = [dict objectForKey:[GlobalEvents MOUSEUP_EVENT_DATA]];
-	move.toSquare = [[Square alloc] init :[GlobalFunctions getColumnFromTouch: touch] :[GlobalFunctions getRowFromTouch: touch]];
-	[self movePiece:move];
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"currentMove"]) {
+		
+		[self movePiece:[change objectForKey:NSKeyValueChangeNewKey]];
+	}		
 }
 
 @end

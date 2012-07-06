@@ -13,7 +13,6 @@
 @implementation History
 
 NSMutableArray *moves;
-int _currentIndex=0;
 
 - (void) addMove:(Board*)board{
 	if(self.currentIndex < [moves count] && [moves count] > 0){
@@ -27,27 +26,28 @@ int _currentIndex=0;
 	self.currentIndex = [moves count]-1;
 }
 - (Board*) currentMove{
-	return [moves objectAtIndex:_currentIndex];
+	return [moves objectAtIndex:currentIndex];
 }
 
 - (int) currentIndex{
-	return _currentIndex;
+	return currentIndex;
 }
 - (id) init{
-	moves = [[NSMutableArray alloc] init];
+	[self reset];
 	return self;
 }
-- (void) setCurrentIndex:(int)value{
-	if(value < 0) return;
-	if (value >= [moves count]) return;
-	
-	_currentIndex = value;
-	[[NSNotificationCenter defaultCenter] postNotificationName:[GlobalEvents CHANGE_EVENT] object:self];	
 
+
+- (void) setCurrentIndex:(int)currentIndexValue{
+	if(currentIndexValue < 0) return;
+	if (currentIndexValue >= [moves count]) return;
+	currentIndex = currentIndexValue;
 }
 - (void) refresh{
 	self.currentIndex = self.currentIndex;
 }
-
+- (void) reset{
+	moves = [[NSMutableArray alloc] init];
+}
 
 @end

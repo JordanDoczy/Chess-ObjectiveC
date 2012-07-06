@@ -11,14 +11,17 @@
 
 @interface History : NSObject {
 
+	int currentIndex;
 }
 
 @property (readonly) Board *currentMove;
-@property (nonatomic) int currentIndex;
 
 - (void) addMove:(Board*)board;
 - (id) init;
 - (void) refresh;
+- (int) currentIndex;
+- (void) setCurrentIndex:(int)currentIndexValue;
+- (void) reset;
 
 	
 @end

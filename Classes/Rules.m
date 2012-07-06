@@ -43,6 +43,9 @@ History *model;
 
 	return true;
 }
+- (BOOL) isCastleAttempt:(Move *)move :(Board*)board :(Piece*)currentPiece{
+	return [currentPiece isKindOfClass:[King class]] && abs(move.fromSquare.column - move.toSquare.column) == 2;
+}
 - (BOOL) isToEmpty:(Move *)move{
 	Piece *to = [model.currentMove getItemAtSquare:move.toSquare.column :move.toSquare.row];
 	return [to isKindOfClass:[NullPiece class]];
@@ -78,10 +81,6 @@ History *model;
 	
 	return false;
 }
-- (BOOL) isValidCastle:(Move *)move{
-	Piece *king = [model.currentMove getItemAtSquare:move.fromSquare.column :move.fromSquare.row];
-	return [self isValidCastle :move :model.currentMove :king];
-}
 - (BOOL) isValidCastle:(Move *)move :(Board*)board :(Piece*)king :(Piece*)rook{
 	if(king.moved) return false;
 	if(move.toSquare.column != G && move.toSquare.column != C) return false;
@@ -89,35 +88,6 @@ History *model;
 	Move *rookMove = [board getRookMoveFromCastleAttempt:move :king];
 	
 	return [rook isValidMove:rookMove :board :false];
-}
-- (BOOL) isValidCastle:(Move *)move :(Board*)board :(Piece*)king{
-	Rook *rook;
-	Move *rookMove = [[Move alloc] init];
-	
-	if(king.moved) return false;
-	if(move.toSquare.column != G && move.toSquare.column != C) return false;
-	
-	
-	
-	//rookMove.fromSquare = [[Square alloc] init :move.toSquare.column == G ? H : C :king.color == White ? One: Eight];
-	
-	//rook = [board getItemAtSquare:rookMove.fromSquare.column :rookMove.fromSquare.row];
-	//if(rook.moved) return false;
-	
-	//rookMove.toSquare = [[Square alloc] init :move.toSquare.column == G ? F : D :move.toSquare.row];
-	
-	
-	
-	if([rook isValidMove:rookMove :board :false]){  // TODO move to controller
-		[board clearSquare:rookMove.fromSquare.column :rookMove.fromSquare.row];
-		[board setSquare:rookMove.toSquare.column :rookMove.toSquare.row :rook];
-		rook.moved = true;
-		return true;
-	}
-	
-	
-	return false;
-	
 }
 - (BOOL) isValidMove:(Move *)move{
 	Piece *from = [[model currentMove] getItemAtSquare:move.fromSquare.column :move.fromSquare.row];

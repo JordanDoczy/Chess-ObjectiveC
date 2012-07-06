@@ -39,20 +39,31 @@ BoardView *view;
 	model = [[History alloc] init];
 	view = [[BoardView alloc] initWithModel:model];
 	controller = [[Controller alloc] initWithModel:model];
-
-	// move to controller class
-	[[NSNotificationCenter defaultCenter] addObserver:controller selector:@selector(mouseDownEventHandler:) name:[GlobalEvents MOUSEDOWN_EVENT] object:view ];
-	[[NSNotificationCenter defaultCenter] addObserver:controller selector:@selector(mouseUpEventHandler:) name:[GlobalEvents MOUSEUP_EVENT] object:view ];
-
+	
+	[view addObserver:controller forKeyPath:@"currentMove" options:NSKeyValueObservingOptionNew context:nil];
+	
 	[controller reset];
-	[self test];
 	
+	// TEST
+	//[self test];
+	UIButton *undo = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+	[undo addTarget:controller action:@selector(undo:)forControlEvents:UIControlEventTouchDown];
+	[undo setTitle:@"Undo" forState:UIControlStateNormal];
+	undo.frame = CGRectMake(25.0, 410.0, 60.0, 25.0);
+	[window addSubview:undo];
 	
-	UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-	[button addTarget:self action:@selector(buttonClicked:)forControlEvents:UIControlEventTouchDown];
-	[button setTitle:@"Log" forState:UIControlStateNormal];
-	button.frame = CGRectMake(100.0, 410.0, 120.0, 50.0);
-	[window addSubview:button];
+	UIButton *redo = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+	[redo addTarget:controller action:@selector(redo:)forControlEvents:UIControlEventTouchDown];
+	[redo setTitle:@"Redo" forState:UIControlStateNormal];
+	redo.frame = CGRectMake(100.0, 410.0, 60.0, 25.0);
+	[window addSubview:redo];
+
+	UIButton *reset = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+	[reset addTarget:controller action:@selector(reset:)forControlEvents:UIControlEventTouchDown];
+	[reset setTitle:@"Reset" forState:UIControlStateNormal];
+	reset.frame = CGRectMake(175.0, 410.0, 60.0, 25.0);
+	[window addSubview:reset];
+	
 	
 	
 	[window makeKeyAndVisible];
@@ -61,25 +72,6 @@ BoardView *view;
 	
 	
     return YES;
-}
-
-- (void)buttonClicked:(UIButton*)button
-{
-	
-	Board *board = model.currentMove;
-	Piece *piece = [board getPiece :Black :@"Queen"];
-	Square *square = [board getSquare:piece];
-	
-	[Logger logPiece:square :piece];
-			 
-	NSArray *moves = [piece getPossibleMoves:board];
-	for (Move *move in moves){
-		if([piece isValidMove:move :board :false]){
-			[Logger logMove:move];
-		}
-	}
-	//[Logger logMoves:moves :piece];
-	
 }
 
 - (void) test{

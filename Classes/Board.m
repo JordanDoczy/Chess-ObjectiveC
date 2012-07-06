@@ -33,14 +33,12 @@
 	copy.squares = [[NSMutableArray alloc] initWithArray:squares copyItems:YES];
 	return copy;
 }
-
 + (int) getColumn:(int)index{
 	return index%[Constants COLUMNS];
 }
 + (int) getIndex:(int)column :(int)row{
 	return (row*[Constants ROWS]) + column;
 }
-
 - (id) getKing:(ColorEnum)color{
 	NSPredicate *pred = [NSPredicate predicateWithFormat:@"name == %@", @"King"];
 	NSArray *a = [squares filteredArrayUsingPredicate:pred];
@@ -51,7 +49,6 @@
 	
 	return 0;
 }
-
 - (id) getRookFromCastleAttempt:(Move*)move :(Piece*)king{
 	return [self getItemAtSquare:move.toSquare.column == G ? H : C :king.color == White ? One: Eight];
 }
@@ -61,7 +58,6 @@
 	rookMove.toSquare = [[Square alloc] init :move.toSquare.column == G ? F : D :move.toSquare.row];
 	return rookMove;
 }
-
 - (id) getPiece:(ColorEnum)color :(NSString*)name{
 	NSPredicate *pred = [NSPredicate predicateWithFormat:@"name == %@", name];
 	NSArray *a = [squares filteredArrayUsingPredicate:pred];
@@ -72,7 +68,6 @@
 	
 	return 0;
 }
-
 - (id) getPositionOfKing:(ColorEnum)color{
 	Piece *king = [self getKing:color];
 	return [self getSquare:king];
@@ -114,7 +109,6 @@
 	if(index != NSNotFound) return [[Square alloc] init: [Board getColumn:index] :[Board getRow:index]];
 	return 0;
 }
-
 - (id) init{
 	squares = [[NSMutableArray alloc] initWithCapacity:[Constants COLUMNS]*[Constants ROWS]];
 	[self initSquares];
@@ -126,7 +120,6 @@
 		[squares addObject:[[NullPiece alloc] init]];
 	}
 }
-
 - (BOOL) isAdjacentColumn:(Move *)move{
 	return abs(move.fromSquare.column - move.toSquare.column) == 1;
 }
@@ -213,7 +206,6 @@
 - (BOOL) isSquareEmpty:(ColumnEnum)column :(RowEnum)row{
 	return [[self getItemAtSquare:column :row] isKindOfClass:[NullPiece class]];
 }
-
 - (void) setSquare:(int)index :(Piece*)piece{
 	[squares replaceObjectAtIndex:index withObject:piece];
 }

@@ -17,6 +17,7 @@
 - (id) init;
 - (id) initWithModel:(History *)history;
 - (void) movePiece:(Move *)move;
+- (void) redo;
 - (void) reset;
 - (void) setUpBoard;
 - (void) undo;

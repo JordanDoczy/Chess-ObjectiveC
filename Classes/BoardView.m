@@ -11,7 +11,9 @@
 #import "BoardView.h"
 #import "Constants.h"
 #import "GlobalEvents.h"
+#import "GlobalFunctions.h"
 #import "History.h"
+#import "Move.h"
 #import "NullPiece.h"
 #import "Piece.h"
 #import "PieceView.h"
@@ -22,28 +24,47 @@
 History *model;
 NSMutableArray *imageViews;
 
-- (id) init{
-	[self initWithFrame:CGRectMake(0, 
-								   0,
-								   ([Constants SQUARE_SIZE]*[Constants COLUMNS])+([Constants X_OFFSET]*2), 
-								   ([Constants SQUARE_SIZE]*[Constants ROWS])+([Constants Y_OFFSET]*2))];
-	imageViews = [[NSMutableArray alloc] init];
-	return self;
-}
+Move *_currentMove;
 
-- (id) initWithModel:(History*)history{
+- (void) addPiece:(Piece*)piece :(int)column :(int)row{
 	
-	model = history;
-
-	[[NSNotificationCenter defaultCenter]
-	 addObserver:self
-	 selector:@selector(changeEventHandler:)
-	 name:[GlobalEvents CHANGE_EVENT]
-	 object:history ];
+	UIImage *image = [UIImage imageNamed:[[piece display] stringByAppendingString:@".png"]];
 	
-	return [self init];
+	PieceView *pieceView = [[PieceView alloc] initWithImage:image];
+	pieceView.userInteractionEnabled = YES;
+	pieceView.opaque = YES;
+	pieceView.frame = CGRectMake([Constants X_OFFSET] + (column*[Constants SQUARE_SIZE])+1.7,  // 1.7 is needed to center piece (horizontally)
+								 [Constants Y_OFFSET] + (([Constants ROWS]-1-row)*[Constants SQUARE_SIZE])+.7,	  // .7 is needed to center piece (vertically)
+								 [Constants SQUARE_SIZE]*.9, 
+								 [Constants SQUARE_SIZE]*.9); 
+	
+	
+	pieceView.column = column;
+	pieceView.row = row;
+	
+	[self addSubview:pieceView];
+	[imageViews addObject:pieceView];
+	[pieceView release];
 }
-
+- (void) changeEventHandler: (NSNotification *) notification{
+	Piece *piece;
+	int column;
+	int row;
+	
+	[self removeAllImages];
+	
+	for (column = 0; column < [Constants COLUMNS]; column++) {
+		for (row=0; row<[Constants ROWS]; row++) {
+			piece = [model.currentMove getItemAtSquare:column :row];
+			if(![piece isKindOfClass:[NullPiece class]]){
+				[self addPiece:piece :column :row];
+			}
+		}
+	}
+}
+- (void) dealloc {
+	[super dealloc];
+}
 - (void) drawBoard{
 	CGContextRef context = UIGraphicsGetCurrentContext();
 	
@@ -63,80 +84,68 @@ NSMutableArray *imageViews;
 		}
 	}
 }
-
 - (void) drawRect:(CGRect)rect {
 	[self drawBoard];
 }
-
-- (void) addPiece:(Piece*)piece :(int)column :(int)row{
-	
-	UIImage *image = [UIImage imageNamed:[[piece display] stringByAppendingString:@".png"]];
-	
-	PieceView *pieceView = [[PieceView alloc] initWithImage:image];
-	pieceView.userInteractionEnabled = YES;
-	pieceView.opaque = YES;
-	pieceView.frame = CGRectMake([Constants X_OFFSET] + (column*[Constants SQUARE_SIZE])+1.7,  // 1.7 is needed to center piece (horizontally)
-								 [Constants Y_OFFSET] + (([Constants ROWS]-1-row)*[Constants SQUARE_SIZE])+.7,	  // .7 is needed to center piece (vertically)
-								 [Constants SQUARE_SIZE]*.9, 
-								 [Constants SQUARE_SIZE]*.9); 
-	
-	
-	pieceView.column = column;
-	pieceView.row = row;
-	 
-	[self addSubview:pieceView];
-	[imageViews addObject:pieceView];
-	[pieceView release];
+- (id) init{
+	[self initWithFrame:CGRectMake(0, 
+								   0,
+								   ([Constants SQUARE_SIZE]*[Constants COLUMNS])+([Constants X_OFFSET]*2), 
+								   ([Constants SQUARE_SIZE]*[Constants ROWS])+([Constants Y_OFFSET]*2))];
+	imageViews = [[NSMutableArray alloc] init];
+	_currentMove = [[Move alloc] init];
+	return self;
 }
-
-- (void) changeEventHandler: (NSNotification *) notification
-{
-	Piece *piece;
-	int column;
-	int row;
+- (id) initWithModel:(History*)history{
 	
-	[self removeAllImages];
-	
-	for (column = 0; column < [Constants COLUMNS]; column++) {
-		for (row=0; row<[Constants ROWS]; row++) {
-			piece = [model.currentMove getItemAtSquare:column :row];
-			if(![piece isKindOfClass:[NullPiece class]]){
-				[self addPiece:piece :column :row];
-			}
-		}
-	}
+	model = history;
+	[history addObserver:self forKeyPath:@"currentIndex" options:NSKeyValueObservingOptionNew context:nil];
+	return [self init];
 }
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-	UITouch *touch = [touches anyObject];
-	NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
-
-    [userInfo setObject:touch forKey:[GlobalEvents MOUSEDOWN_EVENT_DATA]];
-	[[NSNotificationCenter defaultCenter] postNotificationName:[GlobalEvents MOUSEDOWN_EVENT] object:self userInfo:userInfo];	
-}
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
-	UITouch *touch = [touches anyObject];
-	NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
-
-    [userInfo setObject:touch forKey:[GlobalEvents MOUSEUP_EVENT_DATA]];
-	[[NSNotificationCenter defaultCenter] postNotificationName:[GlobalEvents MOUSEUP_EVENT] object:self userInfo:userInfo];	
-}
-
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event{}
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{}
-
-
 - (void) removeAllImages{
 	for (int i=0; i<[imageViews count]; i++){
 		[[imageViews objectAtIndex:i] removeFromSuperview];
 	}
 	[imageViews removeAllObjects];
 }
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+	UITouch *touch = [touches anyObject];
+	_currentMove.fromSquare = [[Square alloc] init :[GlobalFunctions getColumnFromTouch: touch] :[GlobalFunctions getRowFromTouch: touch]];
+}
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event{}
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+	UITouch *touch = [touches anyObject];
+	_currentMove.toSquare = [[Square alloc] init :[GlobalFunctions getColumnFromTouch: touch] :[GlobalFunctions getRowFromTouch: touch]];
+	self.currentMove = _currentMove;
+}
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{}
 
-- (void)dealloc {    [super dealloc];}
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (object == model && [keyPath isEqualToString:@"currentIndex"] && model.currentIndex >= 0) {
+		Piece *piece;
+		int column;
+		int row;
+		
+		[self removeAllImages];
+		
+		for (column = 0; column < [Constants COLUMNS]; column++) {
+			for (row=0; row<[Constants ROWS]; row++) {
+				piece = [model.currentMove getItemAtSquare:column :row];
+				if(![piece isKindOfClass:[NullPiece class]]){
+					[self addPiece:piece :column :row];
+				}
+			}
+		}
+	}		
+}
 
-	
-
+- (Move*) currentMove{
+	return currentMove;
+}
+- (void) setCurrentMove:(Move*)currentMoveValue{
+	if(currentMoveValue.toSquare == nil || currentMoveValue.fromSquare == nil) return;
+	currentMove = currentMoveValue;
+}
 
 
 

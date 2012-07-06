@@ -21,12 +21,11 @@
 - (id) initWithModel:(History *)history;
 - (BOOL) isCaptureAttempt:(Move *)move;
 - (BOOL) isCaptureAttempt:(Move *)move :(Board *)board :(Piece *)from;
+- (BOOL) isCastleAttempt:(Move *)move :(Board*)board :(Piece*)currentPiece;
 - (BOOL) isCorrectColor:(ColorEnum)color;
 - (BOOL) isKingInCheck:(Move *)move;
 - (BOOL) isKingInCheck:(Move *)move :(Board*)board :(Piece*)from;
 - (BOOL) isToEmpty:(Move *)move;
-- (BOOL) isValidCastle:(Move *)move;
-- (BOOL) isValidCastle:(Move *)move :(Board*)board :(Piece*)king;
 - (BOOL) isValidCastle:(Move *)move :(Board*)board :(Piece*)king :(Piece*)rook;
 
 - (BOOL) isValidMove:(Move *)move;

@@ -12,5 +12,7 @@
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 
+- (void) test;
+
 @end
 
